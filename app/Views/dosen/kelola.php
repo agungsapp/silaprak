@@ -77,21 +77,21 @@
               Tambah Pertemuan
             </button>
             <!-- pertemuan  -->
-            <table class="table mt-3">
+            <table class="table mt-3 table-responsive">
               <thead>
                 <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">nama</th>
-                  <th scope="col">Action</th>
+                  <th>No.</th>
+                  <th>nama</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php $i = 1; ?>
                 <?php foreach ($lp as $l) : ?>
                   <tr>
-                    <th scope="row"><?= $i++; ?></th>
+                    <td><?= $i++; ?></td>
                     <td>Pertemuan <?= $l['kode_pertemuan']; ?></td>
-                    <td><a href="/dosen/detailPertemuan/<?= $l['id']; ?>" class="btn btn-success">Kelola Pertemuan</a></td>
+                    <td><a href="/dosen/detailPertemuan/<?= $l['id'] . '/' . $dk['kode_mk'] . '/' . $l['kode_pertemuan']; ?>" class="btn btn-success">Kelola Pertemuan</a></td>
                   </tr>
                 <?php endforeach ?>
               </tbody>

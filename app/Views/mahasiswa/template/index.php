@@ -18,6 +18,15 @@ use CodeIgniter\Database\BaseUtils;
   <link rel="stylesheet" href="<?= base_url(); ?>/dosen/assets/css/shared/iconly.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+  <style>
+    @media only screen and (max-width: 600px) {
+      td {
+        font-size: 14px;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -26,7 +35,7 @@ use CodeIgniter\Database\BaseUtils;
     <?= $this->include('mahasiswa/template/sidebar'); ?>
 
 
-    <div id="main">
+    <div id="main" class="container p-2">
       <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
           <i class="bi bi-justify fs-3"></i>

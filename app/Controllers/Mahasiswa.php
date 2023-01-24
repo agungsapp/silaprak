@@ -6,6 +6,7 @@ use \App\Models\UsersModel;
 use \App\Models\MataKuliahModel;
 use \App\Models\KelasMahasiswaModel;
 use \App\Models\DetailPertemuanModel;
+use \App\Models\TugasModel;
 
 
 class Mahasiswa extends BaseController
@@ -14,6 +15,7 @@ class Mahasiswa extends BaseController
   protected $mkModel;
   protected $klsMhsModel;
   protected $detailPertemuanModel;
+  protected $tugasModel;
 
   public function __construct()
   {
@@ -21,6 +23,7 @@ class Mahasiswa extends BaseController
     $this->mkModel = new MataKuliahModel();
     $this->klsMhsModel = new KelasMahasiswaModel();
     $this->detailPertemuanModel = new DetailPertemuanModel();
+    $this->tugasModel = new TugasModel();
   }
 
   public function index()
@@ -127,7 +130,7 @@ class Mahasiswa extends BaseController
       'title' => 'masuk kelas',
       'menu' => 'daftarkelas',
       'kelas' => $this->klsMhsModel->getKelasMhs($idkel),
-      'pertemuan' => $this->detailPertemuanModel->getPertemuanByMk($kodemk)
+      'pertemuan' => $this->detailPertemuanModel->getPertemuanTugas($kodemk)
     ];
 
     // dd($data['pertemuan']);
@@ -142,5 +145,11 @@ class Mahasiswa extends BaseController
       session()->setFlashdata('pesan', 'Data kelas berhasil dihapus !');
       return redirect()->to('/mahasiswa/kelasSaya');
     }
+  }
+
+  public function download($id)
+  {
+    $file = $this->tugasModel->find($id);
+    return $this->response->download('upload_instruksi/' . $file['file_instruksi'], null);
   }
 }

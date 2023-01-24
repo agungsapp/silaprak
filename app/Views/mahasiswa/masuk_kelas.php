@@ -69,23 +69,34 @@
 
         <!-- card pertemuan -->
         <div class="card">
-          <h5 class="card-header">======================================</h5>
+          <h5 class="card-header">Pertemuan</h5>
           <div class="card-body">
             <!-- Button trigger modal -->
             <?php foreach ($pertemuan as $p) : ?>
               <!-- pertemuan  -->
               <!-- acordion start -->
-              <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
                 <!-- item -->
                 <div class="accordion-item">
                   <h2 class="accordion-header border" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne<?= $p['kode_pertemuan']; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      <strong>Pertemuan <?= $p['kode_pertemuan']; ?></strong>
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne<?= $p['id_pertemuan']; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <strong>Pertemuan <?= $p['id_pertemuan']; ?></strong>
                     </button>
                   </h2>
-                  <div id="panelsStayOpen-collapseOne<?= $p['kode_pertemuan']; ?>" class="accordion-collapse collapse border" aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body bg-dark text-black">
-                      <strong>Buatlah bla bla bla </strong> dengan menerapkan bla bla bla di dalamny
+                  <div id="panelsStayOpen-collapseOne<?= $p['id_pertemuan']; ?>" class="accordion-collapse collapse border" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body bg-dark text-black d-flex flex-column">
+                      <?= $p['deskripsi']; ?>
+
+                      <div class="card mt-5 bg-info">
+                        <div class="card-body">
+                          <p class="text-black"><strong>file materi :</strong> <?= $p['file_instruksi']; ?></p>
+                        </div>
+                      </div>
+
+                      <div class="d-flex">
+                        <a href="/mahasiswa/download/<?= $p['id_tugas']; ?>" style="width: 200px;" class="btn btn-primary">Download</a>
+                        <a href="#" style="width: 200px; margin-left: 5px;" class="btn btn-success">Lihat detail</a>
+                      </div>
                     </div>
                   </div>
                 </div>

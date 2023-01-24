@@ -60,9 +60,9 @@
                         <td><?= $mk['sks']; ?> SKS</td>
                         <td class="text-bold-500"><?= $mk['hari']; ?></td>
                         <td><?= $mk['jam']; ?></td>
-                        <td>
+                        <td id="aksidaftarkelas">
                           <a href="#" class="fs-5 btn btn-warning" style="margin-right: 10px;"><i class="fa-solid fa-pen"></i></a>
-                          <a href="#" class="fs-5 btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                          <a href="#" class="fs-5 btn btn-danger fs-5"><i class="fa-solid fa-trash-can"></i></a>
                           <a href="/dosen/kelolaKelas/<?= $mk['kode_mk']; ?>" class="fs-5 btn btn-success" style="margin-left: 10px;">Kelola</a>
                         </td>
                       </tr>

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="<?= base_url(); ?>/dosen/assets/css/pages/auth.css">
   <link rel="shortcut icon" href="<?= base_url(); ?>/dosen/assets/images/logo/favicon.svg" type="image/x-icon">
   <link rel="shortcut icon" href="<?= base_url(); ?>/dosen/assets/images/logo/favicon.png" type="image/png">
+
 </head>
 
 

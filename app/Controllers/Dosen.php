@@ -5,18 +5,21 @@ namespace App\Controllers;
 use \App\Models\MataKuliahModel;
 use \App\Models\ProfileModel;
 use \App\Models\DetailPertemuanModel;
+use \App\Models\TugasModel;
 
 class Dosen extends BaseController
 {
     protected $mkModel;
     protected $profileModel;
     protected $detailPertemuanModel;
+    protected $tugasModel;
 
     public function __construct()
     {
         $this->mkModel = new MataKuliahModel();
         $this->profileModel = new ProfileModel();
         $this->detailPertemuanModel = new DetailPertemuanModel();
+        $this->tugasModel = new TugasModel();
     }
 
     public function index()
@@ -115,6 +118,11 @@ class Dosen extends BaseController
         // panggil function generate kode dari model, kemudian ubah menjadi json.
         return json_encode($this->mkModel->generateKode());
     }
+    public function idtugas()
+    {
+        // panggil function generate kode dari model, kemudian ubah menjadi json.
+        return json_encode($this->tugasModel->generateIDTugas());
+    }
 
 
     public function kelolaKelas($kode)
@@ -148,13 +156,19 @@ class Dosen extends BaseController
         return redirect()->to("/dosen/kelolaKelas/$kodenya");
     }
 
-    public function detailPertemuan($id)
+    public function detailPertemuan($id, $kodemk, $kodepertemuan)
     {
+        // session();
+        $id_tugas = $this->tugasModel->generateIDTugas();
         $pertemuan = $this->detailPertemuanModel->getPertemuanByID($id);
+        $tugas = $this->tugasModel->cekTugas($kodemk, $kodepertemuan);
         $data = [
             'title' => 'Kelola Pertemuan',
+            'validation' => \Config\Services::validation(),
             'pertemuan' => $pertemuan,
-            'menu' => 'daftarkelas'
+            'menu' => 'daftarkelas',
+            'idtugas' => $id_tugas,
+            'datatugas' => $tugas
         ];
         return view('dosen/kelola_pertemuan', $data);
     }
@@ -172,5 +186,66 @@ class Dosen extends BaseController
     public function coba()
     {
         dd($this->request->getVar());
+    }
+
+    public function simpanTugas()
+    {
+        $idpertemuan = $this->request->getVar('idpertemuan');
+        $idtugas = $this->request->getVar('idtugas');
+        $kodemk = $this->request->getVar('kode_mk');
+        // $validation = \Config\Services::validation();
+        if (!$this->validate([
+            'judul_prak' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'judul tidak boleh kosong !'
+                ]
+            ],
+            'deskripsi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'deskripsi tidak boleh kosong !'
+                ]
+            ],
+            'file_prak' => [
+                'rules' => 'uploaded[file_prak]|ext_in[file_prak,rar,zip,pdf,doc,docx]',
+                'errors' => [
+                    'uploaded' => 'file instruksi praktikum tidak boleh kosong !',
+                    'ext_in' => ' tipe file tidak sesuai !'
+                ]
+            ]
+        ])) {
+            // $validation = \Config\Services::validation();
+
+            return redirect()->to("dosen/detailPertemuan/$idpertemuan")->withInput();
+
+            // cara return view
+            // $data['validasi'] = $validation;
+            //return view("dosen/detailPertemuan/$idpertemuan", $data);
+        }
+
+        // ambil gambar
+        $file_instruksi = $this->request->getFile('file_prak');
+        $file_instruksi->move('upload_instruksi');
+        $namafile = $file_instruksi->getName();
+        $tanggal = $this->request->getVar('tanggal');
+        $jam = $this->request->getVar('jam');
+        $deadline = $tanggal . " " . $jam;
+
+
+        // judul_prak, deskripsi, tanggal, jam, file_prak, || btn tambahPraktikum
+        $this->tugasModel->save([
+            'id_tugas' => $idtugas,
+            'kode_mk' => $kodemk,
+            'id_pertemuan' => $idpertemuan,
+            'judul' => $this->request->getVar('judul_prak'),
+            'deskripsi' => $this->request->getVar('deskripsi'),
+            'deadline' => $deadline,
+            'file_instruksi' => $namafile
+        ]);
+        $this->detailPertemuanModel->updateKodePertemuan($idtugas, $kodemk, $idpertemuan);
+
+        session()->setFlashdata('pesan', 'Data pertemuan berhasil di tambahkan !');
+        return redirect()->to("dosen/kelolaKelas/$kodemk");
     }
 }

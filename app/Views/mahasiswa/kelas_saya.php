@@ -23,7 +23,7 @@
 
   <!-- Hoverable rows start -->
   <div class="card">
-    <h5 class="card-header border bg-primary text-light">Kelas yang anda ikuti</h5>
+    <h5 class="card-header border bg-primary text-light">Kelas anda</h5>
     <div class="card-body border d-flex flex-wrap justify-content-around">
 
       <!-- loop hasil pencarian -->

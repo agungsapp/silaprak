@@ -7,7 +7,7 @@
       <div class="auth-logo">
         <a href="index.html"><img src="<?= base_url(); ?>/dosen/assets/images/logo/logodj.png" style="width: 150px; height: 150px; margin-top: -50px; margin-bottom: -100px;" alt="Logo"></a>
       </div>
-      <h2 class="auth-title">Daftar</h2>
+      <h5 class="auth-title">Daftar</h5>
       <p class="auth-subtitle mb-5">Lengkapi data anda untuk menyelesaikan proses pendaftaran.</p>
 
       <?= view('Myth\Auth\Views\_message_block') ?>
