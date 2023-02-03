@@ -25,6 +25,22 @@ use CodeIgniter\Database\BaseUtils;
         font-size: 14px;
       }
     }
+
+    /* #container {
+      width: 1000px;
+      margin: 20px auto;
+    } */
+
+    .ck-editor__editable[role="textbox"] {
+      /* editing area */
+      min-height: 200px;
+    }
+
+    .ck-content .image {
+      /* block images */
+      max-width: 80%;
+      margin: 20px auto;
+    }
   </style>
 
 </head>
@@ -64,6 +80,11 @@ use CodeIgniter\Database\BaseUtils;
   <script src="<?= base_url(); ?>/sweet/js/sweetalert2.all.min.js"></script>
   <script src="<?= base_url(); ?>/sweet/js/flash.js"></script>
 
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script> -->
+  <!-- <script src="/ck/build/ckeditor.js"></script> -->
+  <script src="<?= base_url('ckeditor/ckeditor.js'); ?>"></script>
+  <!-- <script src="<?= base_url('konfigurasi.js'); ?>"></script> -->
+
   <script>
     $(document).ready(function() {
       $.ajax({
@@ -76,6 +97,21 @@ use CodeIgniter\Database\BaseUtils;
 
       })
     });
+
+    ClassicEditor.create(document.querySelector("#editor"), {
+        ckfinder: {
+          uploadUrl: "<?= base_url('mahasiswa/uploadImages') ?>",
+        },
+        placeholder: "Mulai Kerjakan Laporan !",
+        // This value must be kept in sync with the language defined in webpack.config.js.
+        language: "en",
+      })
+      .then((editor) => {
+        console.log(editor);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   </script>
 
 </body>

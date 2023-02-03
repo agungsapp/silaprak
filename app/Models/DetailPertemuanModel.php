@@ -79,9 +79,29 @@ class DetailPertemuanModel extends Model
     return $pertemuan;
   }
 
-  public function updateKodePertemuan($idtugas, $kode_mk, $idpertemuan)
+  public function updateKodePertemuan($idtugas, $kode_mk, $kodepertemuan)
   {
     $db = \Config\Database::connect();
-    $db->query("UPDATE detail_pertemuan SET kode_tugas=$idtugas WHERE kode_mk= '$kode_mk' AND kode_pertemuan = $idpertemuan");
+    $db->query("UPDATE detail_pertemuan SET kode_tugas = $idtugas WHERE kode_mk= '$kode_mk' AND kode_pertemuan = $kodepertemuan");
+  }
+
+  public function getDataPertemuanKelas($kode_mk)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT d.id, d.kode_mk, d.kode_dosen, d.kode_pertemuan, d.kode_tugas, d.kode_tugas, t.judul, t.deskripsi, t.deadline, t.file_instruksi FROM detail_pertemuan d LEFT JOIN tugas t ON d.kode_tugas=t.id_tugas WHERE d.kode_mk = '$kode_mk'");
+    $pertemuan = $query->getResultArray();
+    return $pertemuan;
+  }
+
+  public function getDataPertemuanLaporan($kodemk, $kodepertemuan)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM detail_pertemuan d
+    JOIN mata_kuliah m ON d.kode_mk=m.kode_mk
+    JOIN dosen ON m.id_dosen=dosen.id_dosen
+    JOIN tugas t ON d.kode_tugas=t.id_tugas
+    WHERE d.kode_mk = '$kodemk' AND d.kode_pertemuan = $kodepertemuan");
+    $data = $query->getRowArray();
+    return $data;
   }
 }

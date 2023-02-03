@@ -79,24 +79,30 @@
                 <!-- item -->
                 <div class="accordion-item">
                   <h2 class="accordion-header border" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne<?= $p['id_pertemuan']; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      <strong>Pertemuan <?= $p['id_pertemuan']; ?></strong>
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne<?= $p['id']; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <strong>Pertemuan </strong>
                     </button>
                   </h2>
-                  <div id="panelsStayOpen-collapseOne<?= $p['id_pertemuan']; ?>" class="accordion-collapse collapse border" aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body bg-dark text-black d-flex flex-column">
-                      <?= $p['deskripsi']; ?>
+                  <div id="panelsStayOpen-collapseOne<?= $p['id']; ?>" class="accordion-collapse collapse border" aria-labelledby="panelsStayOpen-headingOne">
 
-                      <div class="card mt-5 bg-info">
-                        <div class="card-body">
-                          <p class="text-black"><strong>file materi :</strong> <?= $p['file_instruksi']; ?></p>
+                    <div class="accordion-body shadow-md text-black d-flex flex-column">
+                      <!-- jika belum ada tugas -->
+                      <?php if ($p['kode_tugas'] == null) : ?>
+                        <div class="card-body text-center">
+                          <h5 class="text-muted">-- Belum ada data instruksi praktikum --</h5>
                         </div>
-                      </div>
+                      <?php else :  ?>
+                        <h5 class="text-center text-black"><?= $p['judul']; ?></h6>
+                          <hr>
+                          <p><?= $p['deskripsi']; ?></p>
 
-                      <div class="d-flex">
-                        <a href="/mahasiswa/download/<?= $p['id_tugas']; ?>" style="width: 200px;" class="btn btn-primary">Download</a>
-                        <a href="#" style="width: 200px; margin-left: 5px;" class="btn btn-success">Lihat detail</a>
-                      </div>
+                          <div class="btn btn-danger mb-2 bg-gradient opacity-50"><span class="opacity-100">file materi : <?= $p['file_instruksi']; ?></span></div>
+                          <div class="d-flex justify-content-between justify-content-lg-end">
+                            <a href="/mahasiswa/download/<?= $p['kode_tugas']; ?>" class="btn btn-info bg-gradient">Download</a>
+                            <a href="/mahasiswa/kerjakanLaporan/<?= $p['kode_mk'] . "/" . $p['kode_pertemuan'] . "/" . $p['kode_tugas']; ?>" class="btn btn-primary bg-gradient ms-lg-2">Kerjakan Laporan</a>
+                          </div>
+
+                        <?php endif ?>
                     </div>
                   </div>
                 </div>

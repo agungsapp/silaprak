@@ -123,14 +123,12 @@ class Mahasiswa extends BaseController
 
   public function masukKelas($idkel, $kodemk)
   {
-
-
-
     $data = [
       'title' => 'masuk kelas',
       'menu' => 'daftarkelas',
       'kelas' => $this->klsMhsModel->getKelasMhs($idkel),
-      'pertemuan' => $this->detailPertemuanModel->getPertemuanTugas($kodemk)
+      // 'pertemuan' => $this->detailPertemuanModel->getPertemuanTugas($kodemk)
+      'pertemuan' => $this->detailPertemuanModel->getDataPertemuanKelas($kodemk)
     ];
 
     // dd($data['pertemuan']);
@@ -151,5 +149,48 @@ class Mahasiswa extends BaseController
   {
     $file = $this->tugasModel->find($id);
     return $this->response->download('upload_instruksi/' . $file['file_instruksi'], null);
+  }
+
+  public function kerjakanLaporan($kodemk, $kodepertemuan, $kodetugas)
+  {
+    // kodemk, kodepertemuan, kodetugas
+    $data = [
+      'title' => 'Kerjakan Laporan',
+      'menu' => 'daftarkelas',
+      'kelas' => $this->detailPertemuanModel->getDataPertemuanLaporan($kodemk, $kodepertemuan)
+    ];
+
+    return view('mahasiswa/kerjakan_laporan', $data);
+  }
+
+  public function uploadImages()
+  {
+    $validated = $this->validate([
+      'upload' => [
+        // 'uploaded[upload]',
+        // 'mime_in[upload,image/jpg/jpeg,image/png]',
+        // 'max_size[upload,20480]'
+        'rules' => 'uploaded[upload]|mime_in[upload,image/png,image/jpeg,image/jpg,image/JPG]|max_size[upload,51200]'
+      ]
+    ]);
+    $file = $this->request->getFile('upload');
+    if ($validated) {
+      $file = $this->request->getFile('upload');
+      $fileName = $file->getRandomName();
+      $writePath = './laporan_images';
+      $file->move($writePath, $fileName);
+      $data = [
+        'uploaded' => true,
+        'url' => base_url('laporan_images/' . $fileName)
+      ];
+    } else {
+      $data = [
+        'uploaded' => false,
+        'error' => [
+          'messages' => $file
+        ],
+      ];
+    }
+    return $this->response->setJSON($data);
   }
 }

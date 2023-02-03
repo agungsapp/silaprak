@@ -191,6 +191,7 @@ class Dosen extends BaseController
     public function simpanTugas()
     {
         $idpertemuan = $this->request->getVar('idpertemuan');
+        $kodepertemuan = $this->request->getVar('kode_pertemuan');
         $idtugas = $this->request->getVar('idtugas');
         $kodemk = $this->request->getVar('kode_mk');
         // $validation = \Config\Services::validation();
@@ -237,13 +238,13 @@ class Dosen extends BaseController
         $this->tugasModel->save([
             'id_tugas' => $idtugas,
             'kode_mk' => $kodemk,
-            'id_pertemuan' => $idpertemuan,
+            'id_pertemuan' => $kodepertemuan,
             'judul' => $this->request->getVar('judul_prak'),
             'deskripsi' => $this->request->getVar('deskripsi'),
             'deadline' => $deadline,
             'file_instruksi' => $namafile
         ]);
-        $this->detailPertemuanModel->updateKodePertemuan($idtugas, $kodemk, $idpertemuan);
+        $this->detailPertemuanModel->updateKodePertemuan($idtugas, $kodemk, $kodepertemuan);
 
         session()->setFlashdata('pesan', 'Data pertemuan berhasil di tambahkan !');
         return redirect()->to("dosen/kelolaKelas/$kodemk");
