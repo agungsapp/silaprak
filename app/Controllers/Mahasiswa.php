@@ -7,6 +7,7 @@ use \App\Models\MataKuliahModel;
 use \App\Models\KelasMahasiswaModel;
 use \App\Models\DetailPertemuanModel;
 use \App\Models\TugasModel;
+use \App\Models\LaporanModel;
 
 
 class Mahasiswa extends BaseController
@@ -16,6 +17,7 @@ class Mahasiswa extends BaseController
   protected $klsMhsModel;
   protected $detailPertemuanModel;
   protected $tugasModel;
+  protected $laporanModel;
 
   public function __construct()
   {
@@ -24,6 +26,7 @@ class Mahasiswa extends BaseController
     $this->klsMhsModel = new KelasMahasiswaModel();
     $this->detailPertemuanModel = new DetailPertemuanModel();
     $this->tugasModel = new TugasModel();
+    $this->laporanModel = new LaporanModel();
   }
 
   public function index()
@@ -127,7 +130,6 @@ class Mahasiswa extends BaseController
       'title' => 'masuk kelas',
       'menu' => 'daftarkelas',
       'kelas' => $this->klsMhsModel->getKelasMhs($idkel),
-      // 'pertemuan' => $this->detailPertemuanModel->getPertemuanTugas($kodemk)
       'pertemuan' => $this->detailPertemuanModel->getDataPertemuanKelas($kodemk)
     ];
 
@@ -151,13 +153,15 @@ class Mahasiswa extends BaseController
     return $this->response->download('upload_instruksi/' . $file['file_instruksi'], null);
   }
 
-  public function kerjakanLaporan($kodemk, $kodepertemuan, $kodetugas)
+  public function kerjakanLaporan($kodemk, $kodepertemuan, $kodetugas, $idkel)
   {
     // kodemk, kodepertemuan, kodetugas
     $data = [
       'title' => 'Kerjakan Laporan',
       'menu' => 'daftarkelas',
-      'kelas' => $this->detailPertemuanModel->getDataPertemuanLaporan($kodemk, $kodepertemuan)
+      'idkel' => $this->klsMhsModel->getKelasMhs($idkel),
+      'kelas' => $this->detailPertemuanModel->getDataPertemuanLaporan($kodemk, $kodepertemuan),
+      'ava' => $this->laporanModel->getLaporan($kodemk, $kodepertemuan, $kodetugas)
     ];
 
     return view('mahasiswa/kerjakan_laporan', $data);
@@ -165,17 +169,20 @@ class Mahasiswa extends BaseController
 
   public function uploadImages()
   {
+    $file = $this->request->getFile('upload');
+    echo "<script> alert('$file') </script>";
     $validated = $this->validate([
       'upload' => [
         // 'uploaded[upload]',
         // 'mime_in[upload,image/jpg/jpeg,image/png]',
         // 'max_size[upload,20480]'
-        'rules' => 'uploaded[upload]|mime_in[upload,image/png,image/jpeg,image/jpg,image/JPG]|max_size[upload,51200]'
+        'rules' => 'mime_in[upload,image/png,image/jpeg,image/jpg,image/JPG,image/PNG]|max_size[upload,51200]'
       ]
     ]);
-    $file = $this->request->getFile('upload');
+
     if ($validated) {
       $file = $this->request->getFile('upload');
+
       $fileName = $file->getRandomName();
       $writePath = './laporan_images';
       $file->move($writePath, $fileName);
@@ -192,5 +199,51 @@ class Mahasiswa extends BaseController
       ];
     }
     return $this->response->setJSON($data);
+  }
+
+  public function simpan()
+  {
+    $simpan =  $this->laporanModel->save([
+      'id_mahasiswa' => $this->request->getVar('idmahasiswa'),
+      'id_kelas' => $this->request->getVar('idkel'),
+      'kode_mk' => $this->request->getVar('kodemk'),
+      'kode_pertemuan' => $this->request->getVar('kodepertemuan'),
+      'id_tugas' => $this->request->getVar('idtugas'),
+      'isi_laporan' => $this->request->getVar('isilaporan')
+    ]);
+
+    while ($simpan) {
+      session()->setFlashdata('pesan', "Berhasil mengumpulkan laporan pertemuan " . $this->request->getVar('kodepertemuan') . " !");
+      return redirect()->to('/mahasiswa/masukKelas/' . $this->request->getVar('idkel') . '/' . $this->request->getVar('kodemk'));
+    }
+  }
+
+  public function updateLaporan()
+  {
+    $this->laporanModel->save([
+      'id_laporan' => $this->request->getVar('idlaporan'),
+      'id_mahasiswa' => $this->request->getVar('idmahasiswa'),
+      'id_kelas' => $this->request->getVar('idkel'),
+      'kode_mk' => $this->request->getVar('kodemk'),
+      'kode_pertemuan' => $this->request->getVar('kodepertemuan'),
+      'id_tugas' => $this->request->getVar('idtugas'),
+      'isi_laporan' => $this->request->getVar('isilaporan')
+    ]);
+
+
+    session()->setFlashdata('pesan', 'Data laporan berhasil di ubah !');
+    return redirect()->to('/mahasiswa/masukKelas/' . $this->request->getVar('idkel') . '/' . $this->request->getVar('kodemk'));
+  }
+
+  public function laporanLengkap($kodemk, $userid)
+  {
+    $data = [
+      'title' => 'Lihat Laporan Lengkap',
+      'menu' => 'daftarkelas',
+      'laporan' => $this->laporanModel->getAllLaporan($kodemk, $userid),
+      'mhs' => $this->userModel->getProfile(user_id())
+    ];
+
+    return view('mahasiswa/laporan_lengkap', $data);
   }
 }

@@ -7,8 +7,8 @@
       <div class="auth-logo">
         <a href="index.html"><img src="<?= base_url(); ?>/dosen/assets/images/logo/logodj.png" style="width: 150px; height: 150px; margin-top: -50px; margin-bottom: -100px;" alt="Logo"></a>
       </div>
-      <h5 id="title" class="auth-title">Selamat Datang !</h5>
-      <p class="auth-subtitle mb-5">SILAPRAK IIB DARMAJAYA</p>
+      <h5 id="title" class="auth-title fs-3">Selamat Datang !</h5>
+      <p class="auth-subtitle mb-5 fs-5">SILAPRAK IIB DARMAJAYA</p>
       <?= view('Myth\Auth\Views\_message_block') ?>
       <form action="<?= url_to('login') ?>" method="post">
         <?= csrf_field() ?>
@@ -59,7 +59,7 @@
       </form>
       <div class="text-center mt-5 text-lg fs-4">
         <?php if ($config->allowRegistration) : ?>
-          <p class="text-gray-600">Don't have an account? <a href="<?= url_to('register') ?>" class="font-bold">Sign
+          <p class="text-gray-600 fs-4">Don't have an account? <a href="<?= url_to('register') ?>" class="font-bold fs-4">Sign
               up</a>.</p>
         <?php endif; ?>
         <?php if ($config->activeResetter) : ?>

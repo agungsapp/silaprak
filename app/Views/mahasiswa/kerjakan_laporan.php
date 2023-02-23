@@ -62,23 +62,44 @@
               </tbody>
             </table>
           </div>
+          <div class="card-footer d-grid gap-md-2">
+            <a href="/mahasiswa/masukKelas/<?= $idkel['id_kelas'] . '/' . $kelas['kode_mk']; ?>" class="btn btn-primary fs-5">Kembali</a>
+          </div>
         </div>
 
         <!-- card mata kuliah end -->
 
 
         <!-- card pengerjaan laporan -->
-        <div class="card">
-          <div class="card-header bg-primary py-3">
-            <h5>Form Laporan Pertemuan <?= $kelas['kode_pertemuan']; ?></h5>
-          </div>
-          <div class="card-body mt-4">
-            <div id="editor">
-              <!-- <p>Mulai kerjakan laporan</p> -->
+        <form <?php if ($ava > 0) : ?> action="/mahasiswa/updateLaporan" <?php else : ?> action="/mahasiswa/simpan" <?php endif; ?> method="post">
+          <div class="card">
+            <div class="card-header bg-primary py-3">
+              <h5 class="text-white">Form Laporan Pertemuan <?= $kelas['kode_pertemuan']; ?></h5>
+            </div>
+            <div class="card-body mt-4">
+
+
+              <!-- jika sudah ada data sebelumnya -->
+              <?php if ($ava > 0) : ?>
+                <input type="hidden" name="idlaporan" value="<?= $ava['id_laporan']; ?>">
+              <?php endif; ?>
+              <!-- skop end -->
+
+              <input type="hidden" name="idmahasiswa" value="<?= user_id() ?>">
+              <input type="hidden" name="kodemk" value="<?= $kelas['kode_mk']; ?>">
+              <input type="hidden" name="kodepertemuan" value="<?= $kelas['kode_pertemuan']; ?>">
+              <input type="hidden" name="idtugas" value="<?= $kelas['id_tugas']; ?>">
+              <input type="hidden" name="idkel" value="<?= $idkel['id_kelas']; ?>">
+              <textarea name="isilaporan" id="editor"><?php
+                                                      if ($ava > 0) {
+                                                        echo $ava['isi_laporan'];
+                                                      }
+                                                      ?>
+              </textarea>
+              <button type="submit" name="kumpulkan" class="btn btn-primary fs-5 mt-5">Kumpulkan Laporan</button>
             </div>
           </div>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+        </form>
       </div>
       <!-- card pengerjaan laporan end -->
 

@@ -7,6 +7,8 @@ use \App\Models\ProfileModel;
 use \App\Models\DetailPertemuanModel;
 use \App\Models\TugasModel;
 
+use function PHPUnit\Framework\isNull;
+
 class Dosen extends BaseController
 {
     protected $mkModel;
@@ -116,6 +118,7 @@ class Dosen extends BaseController
     public function kode()
     {
         // panggil function generate kode dari model, kemudian ubah menjadi json.
+
         return json_encode($this->mkModel->generateKode());
     }
     public function idtugas()
@@ -248,5 +251,9 @@ class Dosen extends BaseController
 
         session()->setFlashdata('pesan', 'Data pertemuan berhasil di tambahkan !');
         return redirect()->to("dosen/kelolaKelas/$kodemk");
+    }
+
+    public function lihatMahasiswa()
+    {
     }
 }

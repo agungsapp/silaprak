@@ -40,6 +40,7 @@ $routes->setAutoRoute(true);
 // $routes->get('/admin', 'Admin::index',  ['filter' => 'role:admin']);
 
 $routes->get('/', 'Home::index');
+
 // $routes->get('/', 'Dosen::index');
 
 /*

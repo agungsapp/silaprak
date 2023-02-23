@@ -152,13 +152,13 @@
 
                 <!-- judul_prak, deskripsi, tanggal, jam, file_prak, || btn tambahPraktikum -->
                 <!-- id pertemuan hidden -->
-                <input type="text" name="idpertemuan" value="<?= $pertemuan['id'] ?>">
-                <!-- kode kelas text -->
-                <input type="text" name="kode_mk" value="<?= $pertemuan['kode_mk'] ?>">
+                <input type="hidden" name="idpertemuan" value="<?= $pertemuan['id'] ?>">
+                <!-- kode kelas hidden -->
+                <input type="hidden" name="kode_mk" value="<?= $pertemuan['kode_mk'] ?>">
                 <!-- kode pertemuan -->
-                <input type="text" name="kode_pertemuan" value="<?= $pertemuan['kode_pertemuan'] ?>">
-                <!-- kode tugas generate text -->
-                <input type="text" name="idtugas" id="idtugas" value="<?= $idtugas; ?>">
+                <input type="hidden" name="kode_pertemuan" value="<?= $pertemuan['kode_pertemuan'] ?>">
+                <!-- kode tugas generate hidden -->
+                <input type="hidden" name="idtugas" id="idtugas" value="<?= $idtugas; ?>">
 
                 <!-- judul_prak -->
                 <div class="col-md-12">

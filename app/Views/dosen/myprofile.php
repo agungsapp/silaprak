@@ -6,7 +6,7 @@
   <div class="page-title">
     <div class="row">
       <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3><?= $title; ?></h3>
+        <h3 data-aos="zoom-in"><?= $title; ?></h3>
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
       </div>
       <div class="col-12 col-md-6 order-md-2 order-first">
@@ -27,7 +27,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card">
+        <div class="card" data-aos="zoom-in">
           <div class="card-header bg-primary py-2 ">
             <h3 class="text-white fs-4">My Profile</h3>
           </div>

@@ -1,7 +1,7 @@
 <?= $this->extend('dosen/template/index'); ?>
 <?= $this->section('content'); ?>
 
-<div class="page-heading">
+<div class="page-heading" data-aos="zoom-in">
   <h3>Dashboard </h3>
 </div>
 <div class="page-content">
@@ -10,7 +10,7 @@
       <!-- list info top start -->
       <div class="row">
         <div class="col-6 col-lg-3 col-md-6 ">
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <div class="card-body px-4 py-4-5">
               <div class="row">
                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="col-6 col-lg-3 col-md-6 ">
-          <div class="card">
+          <div class="card" data-aos="zoom-in">
             <div class="card-body px-4 py-4-5">
               <div class="row">
                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
@@ -85,7 +85,7 @@
     </div>
 
     <div class="col-12 col-lg-3">
-      <div class="card dosen">
+      <div class="card dosen" data-aos="zoom-in">
         <div class="card-body py-4 px-4">
           <div class="d-flex align-items-center">
             <div class="avatar avatar-xl">
@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="card">
+      <div class="card" data-aos="zoom-in">
         <div class="card-header">
           <h4>Info</h4>
         </div>

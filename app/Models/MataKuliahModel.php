@@ -64,6 +64,7 @@ class MataKuliahModel extends Model
       }
     } else {
       $kd = '2001';
+      return 'TI-' . $kd;
     }
 
     return 'TI-' . $kd;

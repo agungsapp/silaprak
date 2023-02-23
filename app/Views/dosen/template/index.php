@@ -24,6 +24,9 @@ use CodeIgniter\Database\BaseUtils;
   <!-- cdn timpicker  -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
+  <!-- aos -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
   <style>
     ul .ui-menu-item {
       text-decoration: none;
@@ -88,7 +91,12 @@ use CodeIgniter\Database\BaseUtils;
   <!-- js time picker -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+  <!-- aos js -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
   <script>
+    AOS.init();
+
     $(document).ready(function() {
       $.ajax({
         url: "<?= site_url('/dosen/kode'); ?>",

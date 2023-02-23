@@ -4,7 +4,7 @@
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
+      <div class="col-12 col-md-6 order-md-1 order-last" data-aos="zoom-in" data-aos-duration="1000">
         <h3><?= $title; ?></h3>
 
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
@@ -26,7 +26,7 @@
   <section class="section">
     <div class="row" id="table-hover-row">
       <div class="col-12">
-        <div class="card">
+        <div class="card" data-aos="zoom-in" data-aos-duration="1000">
           <div class="card-header">
             <h4 class="card-title">Daftar seluruh kelas anda</h4>
             <!-- Button trigger modal -->

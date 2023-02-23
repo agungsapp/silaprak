@@ -6,7 +6,7 @@
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
+      <div class="col-12 col-md-6 order-md-1 order-last" data-aos="fade-up">
         <h3><?= $title; ?></h3>
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
       </div>
@@ -28,7 +28,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-duration="1000">
           <div class="card-header bg-primary py-3 ">
             <h3 class="text-white fs-4"><?= $dk['mata_kuliah']; ?></h3>
           </div>
@@ -62,13 +62,15 @@
 
               </tbody>
             </table>
+
+            <a href="/dosen/lihatMahasiswa/<?= $dk['kode_mk']; ?>/<?= user_id(); ?>/wo" class="btn btn-primary">Lihat Daftar Mahasiswa</a>
           </div>
         </div>
 
         <!-- card mata kuliah end -->
 
         <!-- card pertemuan -->
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-duration="1000">
           <h5 class="card-header">Kelola Pertemuan</h5>
 
           <div class="card-body">

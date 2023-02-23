@@ -6,7 +6,7 @@
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
+      <div class="col-12 col-md-6 order-md-1 order-last" data-aos="zoom-in" data-aos-duration="1000">
         <h3><?= $title; ?></h3>
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
       </div>
@@ -28,7 +28,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card">
+        <div class="card" data-aos="zoom-in" data-aos-duration="1000">
           <div class="card-header bg-primary py-3 ">
             <h3 class="text-white fs-4"><?= $kelas['mata_kuliah']; ?></h3>
           </div>
@@ -68,19 +68,25 @@
         <!-- card mata kuliah end -->
 
         <!-- card pertemuan -->
-        <div class="card">
-          <h5 class="card-header">Pertemuan</h5>
-          <div class="card-body">
+        <div class="card" data-aos="zoom-in" data-aos-duration="1000">
+
+          <div class="card-header bg-primary py-3 d-flex justify-content-between align-items-baseline">
+            <h5 class="text-white">Pertemuan</h5>
+            <a href="/mahasiswa/laporanLengkap/<?= $kelas['kode_mk']; ?>/<?= user_id(); ?>" class="btn btn-info fw-bold fs-lg-5">Lihat Laporan Lengkap</a>
+          </div>
+
+
+          <div class="card-body mt-3">
             <!-- Button trigger modal -->
             <?php foreach ($pertemuan as $p) : ?>
               <!-- pertemuan  -->
               <!-- acordion start -->
-              <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
+              <div class="accordion mt-1" id="accordionPanelsStayOpenExample">
                 <!-- item -->
                 <div class="accordion-item">
                   <h2 class="accordion-header border" id="panelsStayOpen-headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne<?= $p['id']; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      <strong>Pertemuan </strong>
+                      <strong>Pertemuan <?= $p['kode_pertemuan']; ?></strong>
                     </button>
                   </h2>
                   <div id="panelsStayOpen-collapseOne<?= $p['id']; ?>" class="accordion-collapse collapse border" aria-labelledby="panelsStayOpen-headingOne">
@@ -92,17 +98,25 @@
                           <h5 class="text-muted">-- Belum ada data instruksi praktikum --</h5>
                         </div>
                       <?php else :  ?>
-                        <h5 class="text-center text-black"><?= $p['judul']; ?></h6>
-                          <hr>
-                          <p><?= $p['deskripsi']; ?></p>
+                        <div class="d-flex justify-content-between align-items-center px-4">
+                          <h5 class="text-center text-black"><?= $p['judul']; ?></h5>
+                          <!-- <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Tandai Sudah Selesai
+                            </label>
+                          </div> -->
+                        </div>
+                        <hr>
+                        <p><?= $p['deskripsi']; ?></p>
 
-                          <div class="btn btn-danger mb-2 bg-gradient opacity-50"><span class="opacity-100">file materi : <?= $p['file_instruksi']; ?></span></div>
-                          <div class="d-flex justify-content-between justify-content-lg-end">
-                            <a href="/mahasiswa/download/<?= $p['kode_tugas']; ?>" class="btn btn-info bg-gradient">Download</a>
-                            <a href="/mahasiswa/kerjakanLaporan/<?= $p['kode_mk'] . "/" . $p['kode_pertemuan'] . "/" . $p['kode_tugas']; ?>" class="btn btn-primary bg-gradient ms-lg-2">Kerjakan Laporan</a>
-                          </div>
+                        <div class="btn btn-danger mb-2 bg-gradient opacity-50"><span class="opacity-100">file materi : <?= $p['file_instruksi']; ?></span></div>
+                        <div class="d-flex justify-content-between justify-content-lg-end">
+                          <a href="/mahasiswa/download/<?= $p['kode_tugas']; ?>" class="btn btn-info bg-gradient">Download</a>
+                          <a href="/mahasiswa/kerjakanLaporan/<?= $p['kode_mk'] . "/" . $p['kode_pertemuan'] . "/" . $p['kode_tugas'] . "/" . $kelas['id_kelas']; ?>" class="btn btn-primary bg-gradient ms-lg-2">Kerjakan Laporan</a>
+                        </div>
 
-                        <?php endif ?>
+                      <?php endif ?>
                     </div>
                   </div>
                 </div>

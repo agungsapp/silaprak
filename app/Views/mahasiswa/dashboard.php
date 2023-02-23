@@ -2,12 +2,12 @@
 <?= $this->section('content'); ?>
 
 
-<div class="page-heading">
+<div class="page-heading" data-aos="zoom-in" data-aos-duration="1000">
   <h3>Dashboard </h3>
 </div>
-<div class="page-content">
-  <section class="row">
-    <div class="col-12 col-lg-9">
+<div class="page-content" data-aos="zoom-in" data-aos-duration="1000">
+  <section class="ms-0 ml-lg-2 row px-0">
+    <div class="col-12 px-sm-0">
       <div class="card">
         <h5 class="card-header">Pencarian Kelas</h5>
         <div class="card-body">
@@ -26,7 +26,7 @@
 
               <!-- loop hasil pencarian -->
               <?php foreach ($matkul as $m) : ?>
-                <div class="card border mt-5" style="width: 18rem;">
+                <div class="card border mt-2" style="width: 18rem;">
                   <img src="<?= base_url(); ?>/dosen/assets/images/samples/1.png" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $m['kode_mk'] . ' | ' . $m['mata_kuliah']   ?></h5>
@@ -55,9 +55,9 @@
                             </div>
                             <div class="modal-body">
                               <h5>Setelah anda menekan <strong>Yakin</strong> Tindakan ini tidak dapat dibatalkan !</h5>
-                              <input type="text" name="kode_mk" value="<?= $m['kode_mk']; ?>">
-                              <input type="text" name="id_dosen" value="<?= $m['id_dosen']; ?>">
-                              <input type="text" name="matkul" value="<?= $m['mata_kuliah']; ?>">
+                              <input type="hidden" name="kode_mk" value="<?= $m['kode_mk']; ?>">
+                              <input type="hidden" name="id_dosen" value="<?= $m['id_dosen']; ?>">
+                              <input type="hidden" name="matkul" value="<?= $m['mata_kuliah']; ?>">
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -78,71 +78,6 @@
             </div>
           </div>
           <!-- card hasil pencarian end -->
-        </div>
-      </div>
-      <!-- list info top start -->
-      <!-- <div class="row">
-        <div class="d-flex col-6 col-lg-3 col-md-6">
-          <div class="card">
-            <h5 class="card-header">Kelas Anda</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- list info end -->
-    </div>
-
-    <div class="col-12 col-lg-3">
-      <div class="card">
-        <div class="card-body py-4 px-4">
-          <div class="d-flex align-items-center">
-            <div class="avatar avatar-xl">
-              <img src="<?= base_url(); ?>/dosen/assets/images/faces/1.jpg" alt="Face 1">
-            </div>
-            <div class="ms-3 name">
-              <h5 class="font-bold"><?= user()->firstName . " " . user()->lastName; ?></h5>
-              <h6 class="text-muted mb-0">@<?= user()->username; ?></h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <h4>Info</h4>
-        </div>
-        <div class="card-content pb-4 px-4">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td>Nama</td>
-                <td>:</td>
-                <td><?= user()->firstName . " " . user()->lastName; ?></td>
-              </tr>
-              <tr>
-                <td>Username</td>
-                <td>:</td>
-                <td>@<?= user()->username; ?></td>
-              </tr>
-              <tr>
-                <td>e-mail</td>
-                <td>:</td>
-                <td><?= user()->email; ?></td>
-              </tr>
-              <tr>
-                <td>Role</td>
-                <td>:</td>
-                <td><span class="badge text-bg-primary">mahasiswa</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <a href="index.html" class='btn btn-danger'>
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-          </a>
         </div>
       </div>
     </div>
