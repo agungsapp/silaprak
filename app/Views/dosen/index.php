@@ -1,7 +1,7 @@
 <?= $this->extend('dosen/template/index'); ?>
 <?= $this->section('content'); ?>
 
-<div class="page-heading" data-aos="zoom-in">
+<div class="page-heading">
   <h3>Dashboard </h3>
 </div>
 <div class="page-content">

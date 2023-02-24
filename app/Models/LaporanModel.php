@@ -24,10 +24,10 @@ class LaporanModel extends Model
   protected $updatedField  = 'updated_at';
   protected $deletedField  = 'deleted_at';
 
-  public function getLaporan($kodemk, $kodepertemuan, $kodetugas)
+  public function getLaporan($kodemk, $kodepertemuan, $kodetugas, $idmhs)
   {
     $db = \Config\Database::connect();
-    $query = $db->query("SELECT * FROM laporan WHERE kode_mk = '$kodemk' AND kode_pertemuan = $kodepertemuan AND id_tugas = $kodetugas");
+    $query = $db->query("SELECT * FROM laporan WHERE kode_mk = '$kodemk' AND kode_pertemuan = $kodepertemuan AND id_tugas = $kodetugas AND id_mahasiswa = $idmhs");
     $data = $query->getRowArray();
     return $data;
   }
@@ -44,6 +44,14 @@ class LaporanModel extends Model
     $db = \Config\Database::connect();
     $query = $db->query("SELECT * FROM laporan WHERE kode_mk = '$kodemk' AND id_mahasiswa = $userid");
     $data = $query->getResultArray();
+    return $data;
+  }
+
+  public function getLaporanPerpertemuan($kodemk, $kodepertemuan, $idmhs)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM laporan WHERE kode_mk = '$kodemk' AND kode_pertemuan = $kodepertemuan AND id_mahasiswa= $idmhs");
+    $data = $query->getRowArray();
     return $data;
   }
 }

@@ -1,4 +1,4 @@
-<?= $this->extend('mahasiswa/template/index'); ?>
+<?= $this->extend('dosen/template/index'); ?>
 <?= $this->section('content'); ?>
 
 
@@ -35,9 +35,9 @@
 
         <!-- card pengerjaan laporan -->
 
-        <div class="card">
+        <div class="card p-4">
           <div class="card-header bg-primary py-3">
-            <h5 class="text-white">Form Laporan Pertemuan </h5>
+            <h5 class="text-white">Pratinjau Laporan Pertemuan </h5>
           </div>
           <div class="card-body mt-4">
 
@@ -47,40 +47,16 @@
 
 <?php include('headerlaporan.php') ?>
             <hr>
-
-            <figure class="table" style="width:100%; border:none;">
-    <table cellspacing="0" cellpadding="0" class="ck-table-resized" style="border:none">
-        <colgroup><col style="width:21.29%;"><col style="width:3.31%;"><col style="width:75.4%;"></colgroup>
-        <tbody>
-        <tr>
-                  <td>nama</td>
-                  <td>:</td>
-                  <td><?= $mhs['firstName']; ?> <?= $mhs['lastName'] ?></td>
-                </tr>
-
-                <tr>
-                  <td>Npm</td>
-                  <td>:</td>
-                  <td><?= $mhs['npm']; ?></td>
-                </tr>
-
-                <tr>
-                  <td>E-mail</td>
-                  <td>:</td>
-                  <td><?= $mhs['email']; ?></td>
-                </tr>
-        </tbody>
-    </table>
-</figure>
             <!-- data mahasiswa end -->
 
 
 
-              <?php foreach ($laporan as $l) : ?>
-                <?= $l['isi_laporan'] . "<br>" ?>
-                <?php endforeach ?>
+
+                <?= $dlp['isi_laporan'] . "<br>" ?>
+
               </textarea>
           </div>
+          <a href="#" class="btn btn-primary fs-4">Input Nilai</a>
         </div>
 
       </div>
@@ -96,3 +72,10 @@
 
 
 <?= $this->endSection(); ?>
+<!-- 
+udah sampe sini terakhir 20.28 jumat 24 februari
+plan : 
+- bikin modal input nilai
+- bikin input type hidden untuk kode mk, kode pertemuan , id mahasiswa
+- bikin input nilai dan deskripsi saran kepada mahasiswa
+- bikinya dalam modal ya biar ga boros view , memaksimalkan load halaman. -->

@@ -4,7 +4,7 @@
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last" data-aos="zoom-in" data-aos-duration="1000">
+      <div class="col-12 col-md-6 order-md-1 order-last">
         <h3>Daftar Kelas</h3>
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
       </div>
@@ -22,7 +22,7 @@
 
 
   <!-- Hoverable rows start -->
-  <div class="card" data-aos="zoom-in" data-aos-duration="1000">
+  <div class="card">
     <h5 class="card-header border bg-primary text-light">Kelas anda</h5>
     <div class="card-body border d-flex flex-wrap justify-content-around">
 

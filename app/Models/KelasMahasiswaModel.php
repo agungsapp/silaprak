@@ -48,4 +48,12 @@ class KelasMahasiswaModel extends Model
   public function daftarkan($kode_mk, $id_dosen, $id_mahasiswa)
   {
   }
+
+  public function getDataMhsDosen($kodemk)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM kelas_mahasiswa JOIN mahasiswa ON kelas_mahasiswa.id_mahasiswa = mahasiswa.id_mahasiswa WHERE kelas_mahasiswa.kode_mk = '$kodemk'");
+    $data = $query->getResultArray();
+    return $data;
+  }
 }

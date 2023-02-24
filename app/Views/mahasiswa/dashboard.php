@@ -2,10 +2,10 @@
 <?= $this->section('content'); ?>
 
 
-<div class="page-heading" data-aos="zoom-in" data-aos-duration="1000">
+<div class="page-heading">
   <h3>Dashboard </h3>
 </div>
-<div class="page-content" data-aos="zoom-in" data-aos-duration="1000">
+<div class="page-content">
   <section class="ms-0 ml-lg-2 row px-0">
     <div class="col-12 px-sm-0">
       <div class="card">
@@ -43,7 +43,7 @@
                       Daftarkan saya
                     </button>
                     <!-- modal body start -->
-                    <div class="modal fade" id="daftarKelasModal<?= $m['kode_mk']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="daftarKelasModal<?= $m['kode_mk']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-text="true">
                       <div class="modal-dialog">
                         <!-- form start -->
                         <form action="/mahasiswa/daftarkan" method="post">
@@ -55,9 +55,9 @@
                             </div>
                             <div class="modal-body">
                               <h5>Setelah anda menekan <strong>Yakin</strong> Tindakan ini tidak dapat dibatalkan !</h5>
-                              <input type="hidden" name="kode_mk" value="<?= $m['kode_mk']; ?>">
-                              <input type="hidden" name="id_dosen" value="<?= $m['id_dosen']; ?>">
-                              <input type="hidden" name="matkul" value="<?= $m['mata_kuliah']; ?>">
+                              <input type="text" name="kode_mk" value="<?= $m['kode_mk']; ?>">
+                              <input type="text" name="id_dosen" value="<?= $m['id_dosen']; ?>">
+                              <input type="text" name="matkul" value="<?= $m['mata_kuliah']; ?>">
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

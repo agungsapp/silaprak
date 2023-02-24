@@ -161,7 +161,7 @@ class Mahasiswa extends BaseController
       'menu' => 'daftarkelas',
       'idkel' => $this->klsMhsModel->getKelasMhs($idkel),
       'kelas' => $this->detailPertemuanModel->getDataPertemuanLaporan($kodemk, $kodepertemuan),
-      'ava' => $this->laporanModel->getLaporan($kodemk, $kodepertemuan, $kodetugas)
+      'ava' => $this->laporanModel->getLaporan($kodemk, $kodepertemuan, $kodetugas, user_id())
     ];
 
     return view('mahasiswa/kerjakan_laporan', $data);

@@ -28,13 +28,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Daftar seluruh kelas anda</h4>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahKelas">
-              <i class="fa-solid fa-plus"></i>
-              Tambah Kelas Baru
-            </button>
-            <!-- buton trigger modal end -->
+            <h4 class="card-title">Daftar Mahasiswa</h4>
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -43,26 +37,21 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Kode MK</th>
-                      <th>Mata Kuliah</th>
-                      <th>SKS</th>
-                      <th>Hari</th>
-                      <th>Jam</th>
+                      <th>Nama Mahasiswa</th>
+                      <th>Npm</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($matkul as $mk) : ?>
+                    <?php foreach ($dm as $d) : ?>
                       <tr>
                         <td><?= $i++ ?></td>
-                        <td class="text-bold-500"><?= $mk['kode_mk']; ?></td>
-                        <td><?= $mk['mata_kuliah']; ?></td>
-                        <td><?= $mk['sks']; ?> SKS</td>
-                        <td class="text-bold-500"><?= $mk['hari']; ?></td>
-                        <td><?= $mk['jam']; ?></td>
+                        <td class="text-bold-500"><?= $d['first_name'] . " " . $d['last_name']; ?></td>
+                        <td><?= $d['npm']; ?></td>
                         <td>
-                          <a href="/dosen/daftarNilaiMahasiswa/<?= $mk['kode_mk']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Lihat Mahasiswa</span></a>
+                          <a href="/dosen/detailNilai/<?= $d['kode_mk']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Detail Nilai</span></a>
+                          <!-- baru sampe sini bruh -->
                         </td>
                       </tr>
                     <?php endforeach ?>

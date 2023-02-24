@@ -92,7 +92,7 @@ use CodeIgniter\Database\BaseUtils;
 
 
   <!-- aos js -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="<?= base_url('aos/dist/aos.js') ?>"></script>
 
 
 

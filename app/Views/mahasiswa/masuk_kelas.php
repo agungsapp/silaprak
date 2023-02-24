@@ -28,7 +28,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="card">
           <div class="card-header bg-primary py-3 ">
             <h3 class="text-white fs-4"><?= $kelas['mata_kuliah']; ?></h3>
           </div>
@@ -68,7 +68,7 @@
         <!-- card mata kuliah end -->
 
         <!-- card pertemuan -->
-        <div class="card" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="card">
 
           <div class="card-header bg-primary py-3 d-flex justify-content-between align-items-baseline">
             <h5 class="text-white">Pertemuan</h5>

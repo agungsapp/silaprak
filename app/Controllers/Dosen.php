@@ -6,6 +6,9 @@ use \App\Models\MataKuliahModel;
 use \App\Models\ProfileModel;
 use \App\Models\DetailPertemuanModel;
 use \App\Models\TugasModel;
+use \App\Models\KelasMahasiswaModel;
+use \App\Models\LaporanModel;
+use \App\Models\UsersModel;
 
 use function PHPUnit\Framework\isNull;
 
@@ -15,6 +18,9 @@ class Dosen extends BaseController
     protected $profileModel;
     protected $detailPertemuanModel;
     protected $tugasModel;
+    protected $kelasMhs;
+    protected $laporanModel;
+    protected $userModel;
 
     public function __construct()
     {
@@ -22,6 +28,9 @@ class Dosen extends BaseController
         $this->profileModel = new ProfileModel();
         $this->detailPertemuanModel = new DetailPertemuanModel();
         $this->tugasModel = new TugasModel();
+        $this->kelasMhs = new KelasMahasiswaModel();
+        $this->laporanModel = new LaporanModel();
+        $this->userModel = new UsersModel();
     }
 
     public function index()
@@ -175,7 +184,7 @@ class Dosen extends BaseController
         ];
         return view('dosen/kelola_pertemuan', $data);
     }
-
+    // nilai 
     public function dataNilai()
     {
         $data = [
@@ -186,6 +195,36 @@ class Dosen extends BaseController
         return view('dosen/data_nilai', $data);
     }
 
+    public function daftarNilaiMahasiswa($kodemk)
+    {
+        $data['menu'] = 'daftarnilai';
+        $data['title'] = 'lihat daftar mahasiswa';
+        $data['dk'] = $this->mkModel->getKelas($kodemk);
+        $data['dm'] = $this->kelasMhs->getDataMhsDosen($kodemk); //data mahasiswa (dm)
+
+        return view('dosen/daftar_nilai_mahasiswa', $data);
+    }
+
+    public function detailNilai($kodemk, $idmhs)
+    {
+        $data['menu'] = 'daftarnilai';
+        $data['title'] = 'pratinjau laporan mahasiswa';
+        $data['dpm'] = $this->detailPertemuanModel->getPertemuanMahasiswaNilai($kodemk, $idmhs); //dpm daftar pertemuan mahasiswa baik laporan null dan tidak null
+
+        // dd($data['dpm']);
+        return view('dosen/detail_nilai_pertemuan_mahasiswa', $data);
+    }
+
+    public function lihatLaporanUntukPenilaian($kodemk, $kodepertemuan, $idmhs)
+    {
+        $data['menu'] = 'daftarnilai';
+        $data['title'] = 'penilaian laporan mahasiswa';
+        $data['dlp'] = $this->laporanModel->getLaporanPerpertemuan($kodemk, $kodepertemuan, $idmhs); //dlp data laporan perpertemuan
+        $data['mhs'] = $this->userModel->getProfile($idmhs);
+
+        return view('dosen/pratinjau_laporan', $data);
+    }
+    // end nilai
     public function coba()
     {
         dd($this->request->getVar());
@@ -253,7 +292,25 @@ class Dosen extends BaseController
         return redirect()->to("dosen/kelolaKelas/$kodemk");
     }
 
-    public function lihatMahasiswa()
+    public function lihatMahasiswa($kodemk)
     {
+        $data['menu'] = 'daftarkelas';
+        $data['title'] = 'lihat daftar mahasiswa';
+        $data['dk'] = $this->mkModel->getKelas($kodemk);
+        $data['dm'] = $this->kelasMhs->getDataMhsDosen($kodemk); //data mahasiswa (dm)
+
+        return view('/dosen/lihat_mahasiswa', $data);
+    }
+
+    public function lihatLaporanMahasiswa($kodemk, $idmhs)
+    {
+        $data = [
+            'menu' => 'daftarkelas',
+            'title' => 'data laporan mahasiswa',
+            'laporan' => $this->laporanModel->getAllLaporan($kodemk, $idmhs),
+            'mhs' => $this->userModel->getProfile($idmhs)
+        ];
+
+        return view('mahasiswa/laporan_lengkap', $data);
     }
 }

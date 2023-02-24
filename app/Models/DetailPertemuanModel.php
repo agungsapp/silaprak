@@ -104,4 +104,16 @@ class DetailPertemuanModel extends Model
     $data = $query->getRowArray();
     return $data;
   }
+
+  public function getPertemuanMahasiswaNilai($kodemk, $idmhs)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT dp.kode_mk, dp.kode_pertemuan, dp.kode_tugas, dp.kode_dosen, lp.id_laporan, lp.id_mahasiswa
+    FROM detail_pertemuan dp
+    LEFT JOIN laporan lp
+    ON dp.kode_mk = lp.kode_mk AND dp.kode_pertemuan = lp.kode_pertemuan AND dp.kode_tugas = lp.id_tugas AND lp.id_mahasiswa = $idmhs
+    WHERE dp.kode_mk = '$kodemk'");
+    $data = $query->getResultArray();
+    return $data;
+  }
 }

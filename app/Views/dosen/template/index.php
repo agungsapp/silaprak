@@ -91,6 +91,9 @@ use CodeIgniter\Database\BaseUtils;
   <!-- js time picker -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+  <!-- new -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/super-build/ckeditor.js"></script>
+
   <!-- aos js -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
@@ -141,6 +144,35 @@ use CodeIgniter\Database\BaseUtils;
         element.style.display = "none";
       }
     }
+
+    CKEDITOR.ClassicEditor.create(document.getElementById("editorpreview"), {
+      toolbar: {
+        items: [
+          'exportPDF', 'exportWord',
+        ],
+        shouldNotGroupWhenFull: true
+      },
+      placeholder: 'Mulai kerjakan Laporan !',
+      htmlEmbed: {
+        showPreviews: true
+      },
+      removePlugins: [
+        'CKBox',
+        'CKFinder',
+        'EasyImage',
+        'RealTimeCollaborativeComments',
+        'RealTimeCollaborativeTrackChanges',
+        'RealTimeCollaborativeRevisionHistory',
+        'PresenceList',
+        'Comments',
+        'TrackChanges',
+        'TrackChangesData',
+        'RevisionHistory',
+        'Pagination',
+        'WProofreader',
+        'MathType'
+      ]
+    });
   </script>
 
 </body>

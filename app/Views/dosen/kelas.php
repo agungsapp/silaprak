@@ -9,7 +9,7 @@ use function PHPUnit\Framework\isNull;
 <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last" data-aos="zoom-in">
+      <div class="col-12 col-md-6 order-md-1 order-last">
         <h3>Daftar Kelas</h3>
         <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
       </div>
@@ -30,7 +30,7 @@ use function PHPUnit\Framework\isNull;
   <section class="section">
     <div class="row" id="table-hover-row">
       <div class="col-12">
-        <div class="card" data-aos="fade-down">
+        <div class="card">
           <div class="card-header">
             <h4 class="card-title">Daftar seluruh kelas anda</h4>
             <!-- Button trigger modal -->

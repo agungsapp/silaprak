@@ -28,13 +28,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Daftar seluruh kelas anda</h4>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahKelas">
-              <i class="fa-solid fa-plus"></i>
-              Tambah Kelas Baru
-            </button>
-            <!-- buton trigger modal end -->
+            <h4 class="card-title">Daftar Laporan Mahasiswa</h4>
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -43,29 +37,35 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Kode MK</th>
-                      <th>Mata Kuliah</th>
-                      <th>SKS</th>
-                      <th>Hari</th>
-                      <th>Jam</th>
+                      <th>Pertemuan</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($matkul as $mk) : ?>
+                    <?php foreach ($dpm as $d) : ?>
                       <tr>
                         <td><?= $i++ ?></td>
-                        <td class="text-bold-500"><?= $mk['kode_mk']; ?></td>
-                        <td><?= $mk['mata_kuliah']; ?></td>
-                        <td><?= $mk['sks']; ?> SKS</td>
-                        <td class="text-bold-500"><?= $mk['hari']; ?></td>
-                        <td><?= $mk['jam']; ?></td>
+                        <td class="text-bold-500"> Pertemuan <?= $d['kode_pertemuan']; ?></td>
                         <td>
-                          <a href="/dosen/daftarNilaiMahasiswa/<?= $mk['kode_mk']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Lihat Mahasiswa</span></a>
+                          <?php if ($d['kode_tugas'] == null) : ?>
+                            <span class="badge text-bg-danger">Belum di kerjakan</span>
+                          <?php else : ?>
+                            <span class="badge text-bg-success">Selesai</span>
+                          <?php endif ?>
+                        </td>
+                        <td>
+                          <a href="/dosen/lihatLaporanUntukPenilaian/<?= $d['kode_mk']; ?>/<?= $d['kode_pertemuan']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn <?= ($d['kode_tugas'] == null) ? 'btn-secondary disabled' : 'btn-success'; ?>">Lihat Laporan</a>
+
+                          <!-- plan  -->
+                          <!-- bikin button lihat laporan yang didalamnya ada button untuk input nilai.  -->
+
                         </td>
                       </tr>
                     <?php endforeach ?>
+
+                    <!-- sampai sini bruh baruan,  tingal bikin modal cek laporan. perpetemuan -->
                   </tbody>
                 </table>
               </div>

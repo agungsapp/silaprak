@@ -28,7 +28,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card" data-aos="fade-up" data-aos-duration="1000">
+        <div class="card">
           <div class="card-header bg-primary py-3 ">
             <h3 class="text-white fs-4"><?= $dk['mata_kuliah']; ?></h3>
           </div>
@@ -63,7 +63,7 @@
               </tbody>
             </table>
 
-            <a href="/dosen/lihatMahasiswa/<?= $dk['kode_mk']; ?>/<?= user_id(); ?>/wo" class="btn btn-primary">Lihat Daftar Mahasiswa</a>
+            <a href="/dosen/lihatMahasiswa/<?= $dk['kode_mk']; ?>" class="btn btn-primary">Lihat Daftar Mahasiswa</a>
           </div>
         </div>
 

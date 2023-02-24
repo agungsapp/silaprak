@@ -27,7 +27,7 @@
     <div class="row" id="table-hover-row">
       <div class="col-12 p-4">
         <!-- card start mata kuliah -->
-        <div class="card" data-aos="zoom-in">
+        <div class="card">
           <div class="card-header bg-primary py-2 ">
             <h3 class="text-white fs-4">My Profile</h3>
           </div>
