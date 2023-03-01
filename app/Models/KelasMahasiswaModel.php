@@ -56,4 +56,26 @@ class KelasMahasiswaModel extends Model
     $data = $query->getResultArray();
     return $data;
   }
+
+  public function getKelasAndCheck($idos)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT 
+  mk.kode_mk,
+  mk.mata_kuliah,
+  mk.hari,
+  mk.sks,
+  mk.jam,
+  COUNT(km.id_mahasiswa) AS jumlah_mahasiswa,
+  CASE 
+    WHEN COUNT(km.id_mahasiswa) = 0 THEN 'Kosong'
+    ELSE CONCAT(COUNT(km.id_mahasiswa), ' Mahasiswa')
+  END AS status
+FROM mata_kuliah mk
+LEFT JOIN kelas_mahasiswa km ON mk.kode_mk = km.kode_mk
+WHERE mk.id_dosen = $idos
+GROUP BY mk.kode_mk, mk.mata_kuliah, mk.hari, mk.sks, mk.jam;");
+    $data = $query->getResultArray();
+    return $data;
+  }
 }

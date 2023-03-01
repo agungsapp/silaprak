@@ -61,7 +61,7 @@
                 <li class="submenu-item <?= $menu == "daftarkelas" ? "active" : "" ?>">
                   <a href="/dosen/daftarKelas">Daftar Kelas</a>
                 </li>
-                <li class="submenu-item ">
+                <li class="submenu-item <?= $menu == "daftarnilai" ? "active" : "" ?>">
                   <a href="/dosen/dataNilai">Data Nilai</a>
                 </li>
               </ul>

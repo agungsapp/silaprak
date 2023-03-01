@@ -53,7 +53,7 @@ use CodeIgniter\Database\BaseUtils;
     <?= $this->include('mahasiswa/template/sidebar'); ?>
 
 
-    <div id="main" class="container p-2">
+    <div id="main" class="container p-lg-4 p-sm-0">
       <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
           <i class="bi bi-justify fs-3"></i>

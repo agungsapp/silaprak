@@ -9,6 +9,7 @@ use \App\Models\TugasModel;
 use \App\Models\KelasMahasiswaModel;
 use \App\Models\LaporanModel;
 use \App\Models\UsersModel;
+use \App\Models\NilaiModel;
 
 use function PHPUnit\Framework\isNull;
 
@@ -21,6 +22,7 @@ class Dosen extends BaseController
     protected $kelasMhs;
     protected $laporanModel;
     protected $userModel;
+    protected $nilaiModel;
 
     public function __construct()
     {
@@ -31,6 +33,7 @@ class Dosen extends BaseController
         $this->kelasMhs = new KelasMahasiswaModel();
         $this->laporanModel = new LaporanModel();
         $this->userModel = new UsersModel();
+        $this->nilaiModel = new NilaiModel();
     }
 
     public function index()
@@ -70,12 +73,6 @@ class Dosen extends BaseController
     public function updateProfile()
     {
 
-        // validasi
-        // if (!$this->validate([
-        //     ''
-        // ])) {
-        // }
-
         $this->profileModel->save([
             'id' => $this->request->getVar('id'),
             'email' => $this->request->getVar('email'),
@@ -89,25 +86,20 @@ class Dosen extends BaseController
 
         return redirect()->to('/dosen/myprofile');
     }
-
+    // kelas
     public function daftarKelas()
     {
         $data['menu'] = 'daftarkelas';
         $data['title'] = 'daftar kelas';
         // $data['matkul'] = $this->mkModel->where('id_dosen', user_id())->findAll();
-        $data['matkul'] = $this->mkModel->where('id_dosen', user_id())->findAll();
+        // $data['matkul'] = $this->mkModel->where('id_dosen', user_id())->findAll();
+        $data['matkul'] = $this->kelasMhs->getKelasAndCheck(user_id());
 
         return view('dosen/kelas', $data);
     }
 
     public function simpanKelas()
     {
-
-        // validasi
-        // if (!$this->validate([
-        //     ''
-        // ])) {
-        // }
 
         $this->mkModel->save([
             'kode_mk' => $this->request->getVar('kodemk'),
@@ -123,12 +115,35 @@ class Dosen extends BaseController
         return redirect()->to('/dosen/daftarKelas');
     }
 
+    public function deleteKelas($kodemk)
+    {
+        $this->mkModel->deleteMK($kodemk);
+        session()->setFlashdata('pesan', 'Data kelas berhasil di hapus !');
+        return redirect()->to($_SERVER['HTTP_REFERER']);
+    }
+
+    public function updateKelas()
+    {
+        $this->mkModel->save([
+            'kode_mk' => $this->request->getVar('kodemk'),
+            'id_dosen' => $this->request->getVar('iddosen'),
+            'mata_kuliah' => $this->request->getVar('namamk'),
+            'hari' => $this->request->getVar('hari'),
+            'sks' => $this->request->getVar('sks'),
+            'jam' => $this->request->getVar('jam')
+        ]);
+
+        session()->setFlashdata('pesan', 'Data kelas berhasil di update !');
+
+        return redirect()->to('/dosen/daftarKelas');
+    }
+
     // untuk generate kode mata kuliah
     public function kode()
     {
         // panggil function generate kode dari model, kemudian ubah menjadi json.
 
-        return json_encode($this->mkModel->generateKode());
+        return json_encode($this->mkModel->gk());
     }
     public function idtugas()
     {
@@ -184,13 +199,14 @@ class Dosen extends BaseController
         ];
         return view('dosen/kelola_pertemuan', $data);
     }
+    // kelas end
     // nilai 
     public function dataNilai()
     {
         $data = [
             'title' => 'Data Nilai',
-            'matkul' => $this->mkModel->where('id_dosen', user_id())->findAll(),
-            'menu' => 'daftarkelas'
+            'matkul' => $this->mkModel->getDataNilai(user_id()),
+            'menu' => 'daftarnilai'
         ];
         return view('dosen/data_nilai', $data);
     }
@@ -198,7 +214,7 @@ class Dosen extends BaseController
     public function daftarNilaiMahasiswa($kodemk)
     {
         $data['menu'] = 'daftarnilai';
-        $data['title'] = 'lihat daftar mahasiswa';
+        $data['title'] = 'Daftar Nilai';
         $data['dk'] = $this->mkModel->getKelas($kodemk);
         $data['dm'] = $this->kelasMhs->getDataMhsDosen($kodemk); //data mahasiswa (dm)
 
@@ -209,7 +225,7 @@ class Dosen extends BaseController
     {
         $data['menu'] = 'daftarnilai';
         $data['title'] = 'pratinjau laporan mahasiswa';
-        $data['dpm'] = $this->detailPertemuanModel->getPertemuanMahasiswaNilai($kodemk, $idmhs); //dpm daftar pertemuan mahasiswa baik laporan null dan tidak null
+        $data['dpm'] = $this->detailPertemuanModel->getPertemuanMahasiswaNilaiV($kodemk, $idmhs); //dpm daftar pertemuan mahasiswa baik laporan null dan tidak null
 
         // dd($data['dpm']);
         return view('dosen/detail_nilai_pertemuan_mahasiswa', $data);
@@ -217,13 +233,122 @@ class Dosen extends BaseController
 
     public function lihatLaporanUntukPenilaian($kodemk, $kodepertemuan, $idmhs)
     {
+        $ceknilai = $this->nilaiModel->cekNilai($kodemk, $kodepertemuan, $idmhs);
+        $cek = $ceknilai->getNumRows();
+        $hasilnya = null;
+        if ($cek > 0) {
+            $hasilnya = $ceknilai->getRowArray();
+        } else {
+            $hasilnya = 0;
+        }
+
+        // dd($hasilnya);
+
+
+
         $data['menu'] = 'daftarnilai';
         $data['title'] = 'penilaian laporan mahasiswa';
         $data['dlp'] = $this->laporanModel->getLaporanPerpertemuan($kodemk, $kodepertemuan, $idmhs); //dlp data laporan perpertemuan
         $data['mhs'] = $this->userModel->getProfile($idmhs);
-
+        $data['cn'] = $hasilnya; //cn cek nilai apakah sudah ada.
+        // dd($data['cn']);
         return view('dosen/pratinjau_laporan', $data);
     }
+
+    public function inputNilai()
+    {
+
+        // kodemk koper imas npm nilap saran
+        // standar penilaian ibi darmajaya berdasarkan web http://apt.darmajaya.ac.id/file_dokumen/Peraturan%20Akademik.pdf
+        // >80
+        // 66-80
+        // 51-65
+        // 40-50
+        // <40
+
+        $huruf = '0';
+        $nilai = $this->request->getVar('nilap');
+        if ($nilai > 80) {
+            $huruf = 'A';
+        } else if ($nilai >= 66 && $nilai <= 80) {
+            $huruf = 'B';
+        } else if ($nilai >= 51 && $nilai <= 65) {
+            $huruf = 'C';
+        } else if ($nilai >= 40 && $nilai <= 50) {
+            $huruf = 'D';
+        } else if ($nilai < 40) {
+            $huruf = 'E';
+        } else {
+            $huruf = 'nilai tidak valid';
+        }
+
+        $kodemk = $this->request->getVar('km');
+        $koper = $this->request->getVar('koper');
+        $imas = $this->request->getVar('imas');
+
+
+        $this->nilaiModel->save([
+            'kode_mk' => $kodemk,
+            'kode_pertemuan' => $koper,
+            'npm' => $this->request->getVar('npm'),
+            'id_mahasiswa' => $imas,
+            'id_laporan' => $this->request->getVar('idtugas'),
+            'huruf_mutu' => $huruf,
+            'nilai_angka' => $this->request->getVar('nilap'),
+            'saran' => $this->request->getVar('saran'),
+        ]);
+
+
+        session()->setFlashdata('pesan', 'Data nilai berhasil di tambahkan !');
+
+        // dd($kodemk . $koper . $imas);
+        // return redirect()->to("dosen/lihatLaporanUntukPenilaian/$kodemk/$koper/$imas");
+        return redirect()->to($_SERVER['HTTP_REFERER']);
+    }
+
+    public function updateNilai()
+    {
+        $huruf = '0';
+        $nilai = $this->request->getVar('nilap');
+        if ($nilai > 80) {
+            $huruf = 'A';
+        } else if ($nilai >= 66 && $nilai <= 80) {
+            $huruf = 'B';
+        } else if ($nilai >= 51 && $nilai <= 65) {
+            $huruf = 'C';
+        } else if ($nilai >= 40 && $nilai <= 50) {
+            $huruf = 'D';
+        } else if ($nilai < 40) {
+            $huruf = 'E';
+        } else {
+            $huruf = 'nilai tidak valid';
+        }
+
+        $kodemk = $this->request->getVar('km');
+        $koper = $this->request->getVar('koper');
+        $imas = $this->request->getVar('imas');
+
+
+        $this->nilaiModel->save([
+            'id' => $this->request->getVar('idn'),
+            'kode_mk' => $kodemk,
+            'kode_pertemuan' => $koper,
+            'npm' => $this->request->getVar('npm'),
+            'id_mahasiswa' => $imas,
+            'id_laporan' => $this->request->getVar('idtugas'),
+            'huruf_mutu' => $huruf,
+            'nilai_angka' => $this->request->getVar('nilap'),
+            'saran' => $this->request->getVar('saran'),
+        ]);
+
+
+        session()->setFlashdata('pesan', 'Data nilai berhasil di update !');
+
+        // dd($kodemk . $koper . $imas);
+        // return redirect()->to("dosen/lihatLaporanUntukPenilaian/$kodemk/$koper/$imas");
+        return redirect()->to($_SERVER['HTTP_REFERER']);
+    }
+
     // end nilai
     public function coba()
     {

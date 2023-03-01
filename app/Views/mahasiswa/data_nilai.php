@@ -1,4 +1,4 @@
-<?= $this->extend('dosen/template/index'); ?>
+<?= $this->extend('mahasiswa/template/index'); ?>
 <?= $this->section('content'); ?>
 
 <div class="page-heading">
@@ -28,7 +28,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Daftar seluruh kelas anda</h4>
+            <h4 class="card-title"></h4>
 
           </div>
           <div class="card-content">
@@ -43,7 +43,6 @@
                       <th>SKS</th>
                       <th>Hari</th>
                       <th>Jam</th>
-                      <th>Jumlah Mhs</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -57,9 +56,8 @@
                         <td><?= $mk['sks']; ?> SKS</td>
                         <td class="text-bold-500"><?= $mk['hari']; ?></td>
                         <td><?= $mk['jam']; ?></td>
-                        <td><?= $mk['jumlah_mahasiswa']; ?></td>
                         <td>
-                          <a href="/dosen/daftarNilaiMahasiswa/<?= $mk['kode_mk']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Lihat Mahasiswa</span></a>
+                          <a href="/mahasiswa/lihatDetailNilai/<?= $mk['kode_mk']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Detail Nilai</span></a>
                         </td>
                       </tr>
                     <?php endforeach ?>

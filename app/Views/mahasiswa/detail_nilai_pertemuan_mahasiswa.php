@@ -1,4 +1,4 @@
-<?= $this->extend('dosen/template/index'); ?>
+<?= $this->extend('mahasiswa/template/index'); ?>
 <?= $this->section('content'); ?>
 
 <div class="page-heading">
@@ -28,7 +28,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Daftar seluruh kelas anda</h4>
+            <h4 class="card-title">Daftar Laporan Mahasiswa</h4>
 
           </div>
           <div class="card-content">
@@ -38,31 +38,39 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Kode MK</th>
-                      <th>Mata Kuliah</th>
-                      <th>SKS</th>
-                      <th>Hari</th>
-                      <th>Jam</th>
-                      <th>Jumlah Mhs</th>
+                      <th>Pertemuan</th>
+                      <th>Huruf Mutu</th>
+                      <th>Nilai</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($matkul as $mk) : ?>
+                    <?php foreach ($dpm as $d) : ?>
                       <tr>
                         <td><?= $i++ ?></td>
-                        <td class="text-bold-500"><?= $mk['kode_mk']; ?></td>
-                        <td><?= $mk['mata_kuliah']; ?></td>
-                        <td><?= $mk['sks']; ?> SKS</td>
-                        <td class="text-bold-500"><?= $mk['hari']; ?></td>
-                        <td><?= $mk['jam']; ?></td>
-                        <td><?= $mk['jumlah_mahasiswa']; ?></td>
+                        <td class="text-bold-500"> Pertemuan <?= $d['kode_pertemuan']; ?></td>
+                        <td><?= $d['huruf_mutu'] == null ? 'belum ada nilai' : $d['huruf_mutu']; ?></td>
+                        <td><?= $d['nilai_angka'] == null ? 'belum ada nilai' : $d['nilai_angka']; ?></td>
                         <td>
-                          <a href="/dosen/daftarNilaiMahasiswa/<?= $mk['kode_mk']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Lihat Mahasiswa</span></a>
+                          <?php if ($d['id_laporan'] == null) : ?>
+                            <span class="badge text-bg-danger">Belum di kerjakan</span>
+                          <?php else : ?>
+                            <span class="badge text-bg-success">Selesai</span>
+                          <?php endif ?>
+                        </td>
+                        <td>
+                          <a href="/dosen/lihatLaporanUntukPenilaian/<?= $d['kode_mk']; ?>/<?= $d['kode_pertemuan']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn <?= ($d['id_laporan'] == null) ? 'btn-secondary disabled' : 'btn-success'; ?>">Lihat Laporan</a>
+
+                          <!-- plan  -->
+                          <!-- bikin button lihat laporan yang didalamnya ada button untuk input nilai.  -->
+
                         </td>
                       </tr>
                     <?php endforeach ?>
+
+                    <!-- sampai sini bruh baruan,  tingal bikin modal cek laporan. perpetemuan -->
                   </tbody>
                 </table>
               </div>

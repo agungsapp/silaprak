@@ -26,11 +26,11 @@
 
               <!-- loop hasil pencarian -->
               <?php foreach ($matkul as $m) : ?>
-                <div class="card border mt-2" style="width: 18rem;">
+                <div class="card border mt-2 " style="width: 18rem;">
                   <img src="<?= base_url(); ?>/dosen/assets/images/samples/1.png" class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title"><?= $m['kode_mk'] . ' | ' . $m['mata_kuliah']   ?></h5>
-                    <p class="card-text"><?= $m['firstName'] . ' ' . $m['lastName']; ?></p>
+                    <p class="card-text" style="text-transform: capitalize;"><?= $m['first_name'] . ' ' . $m['last_name']; ?></p>
                   </div>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item"><?= $m['hari']; ?></li>
@@ -39,8 +39,8 @@
                   </ul>
                   <div class="card-body">
                     <!-- modal daftar kelas -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#daftarKelasModal<?= $m['kode_mk']; ?>">
-                      Daftarkan saya
+                    <button type="button" class="btn <?= $m['status'] == 1 ? 'btn-success' : 'btn-primary'; ?> " <?= $m['status'] == 1 ? 'disabled' : ''; ?> data-bs-toggle="modal" data-bs-target="#daftarKelasModal<?= $m['kode_mk']; ?>">
+                      <?= $m['status'] == 1 ? 'Anda Sudah Terdaftar' : 'Daftarkan Saya'; ?>
                     </button>
                     <!-- modal body start -->
                     <div class="modal fade" id="daftarKelasModal<?= $m['kode_mk']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-text="true">
@@ -50,14 +50,14 @@
                           <?= csrf_field(); ?>
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Yakin akan daftar kelas <?= $m['mata_kuliah']; ?> ?</h1>
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Mendaftar <?= $m['mata_kuliah']; ?> ?</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                              <h5>Setelah anda menekan <strong>Yakin</strong> Tindakan ini tidak dapat dibatalkan !</h5>
-                              <input type="text" name="kode_mk" value="<?= $m['kode_mk']; ?>">
-                              <input type="text" name="id_dosen" value="<?= $m['id_dosen']; ?>">
-                              <input type="text" name="matkul" value="<?= $m['mata_kuliah']; ?>">
+                              <h5>Setelah anda menekan <strong>Yakin</strong> Anda akan terdaftar pada mata kuliah <strong><?= $m['mata_kuliah']; ?></strong> !</h5>
+                              <input type="hidden" name="kode_mk" value="<?= $m['kode_mk']; ?>">
+                              <input type="hidden" name="id_dosen" value="<?= $m['id_dosen']; ?>">
+                              <input type="hidden" name="matkul" value="<?= $m['mata_kuliah']; ?>">
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -72,7 +72,6 @@
                   </div>
                 </div>
               <?php endforeach ?>
-
               <!-- loop end -->
 
             </div>

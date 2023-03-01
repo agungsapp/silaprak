@@ -29,6 +29,7 @@
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">Daftar Laporan Mahasiswa</h4>
+
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -38,6 +39,8 @@
                     <tr>
                       <th>No.</th>
                       <th>Pertemuan</th>
+                      <th>Huruf Mutu</th>
+                      <th>Nilai</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -48,15 +51,17 @@
                       <tr>
                         <td><?= $i++ ?></td>
                         <td class="text-bold-500"> Pertemuan <?= $d['kode_pertemuan']; ?></td>
+                        <td><?= $d['huruf_mutu'] == null ? 'belum ada nilai' : $d['huruf_mutu']; ?></td>
+                        <td><?= $d['nilai_angka'] == null ? 'belum ada nilai' : $d['nilai_angka']; ?></td>
                         <td>
-                          <?php if ($d['kode_tugas'] == null) : ?>
+                          <?php if ($d['id_laporan'] == null) : ?>
                             <span class="badge text-bg-danger">Belum di kerjakan</span>
                           <?php else : ?>
                             <span class="badge text-bg-success">Selesai</span>
                           <?php endif ?>
                         </td>
                         <td>
-                          <a href="/dosen/lihatLaporanUntukPenilaian/<?= $d['kode_mk']; ?>/<?= $d['kode_pertemuan']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn <?= ($d['kode_tugas'] == null) ? 'btn-secondary disabled' : 'btn-success'; ?>">Lihat Laporan</a>
+                          <a href="/dosen/lihatLaporanUntukPenilaian/<?= $d['kode_mk']; ?>/<?= $d['kode_pertemuan']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn <?= ($d['id_laporan'] == null) ? 'btn-secondary disabled' : 'btn-success'; ?>">Lihat Laporan</a>
 
                           <!-- plan  -->
                           <!-- bikin button lihat laporan yang didalamnya ada button untuk input nilai.  -->

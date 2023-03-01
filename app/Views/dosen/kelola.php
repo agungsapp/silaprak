@@ -125,25 +125,25 @@
         <div class="modal-body">
 
 
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="kode_mk" id="kode_mk" placeholder="Kode Mata Kuliah" value="<?= $dk['kode_mk']; ?>" readonly>
-            <label for="kode_mk">Kode Mata Kuliah</label>
+          <div class="form-floating ">
+            <input type="hidden" class="form-control" name="kode_mk" id="kode_mk" placeholder="Kode Mata Kuliah" value="<?= $dk['kode_mk']; ?>" readonly>
+            <!-- <label for="kode_mk">Kode Mata Kuliah</label> -->
+            <!-- </div> -->
+            <br>
+
+            <!-- <div class="form-floating "> -->
+            <input type="hidden" class="form-control" name="kode_dosen" id="kode_dosen" placeholder="ID Dosen" value="<?= $dk['id_dosen']; ?>" readonly>
+            <!-- <label for="kode_dosen">ID Dosen</label> -->
+            <!-- </div> -->
+            <br>
+
+            <!-- <div class="form-floating "> -->
+            <input type="hidden" class="form-control" name="kode_pertemuan" id="kode_pertemuan" placeholder="Pertemuan" value="<?= $dp; ?>" readonly>
+            <!-- <label for="kode_pertemuan">Pertemuan</label> -->
           </div>
           <br>
 
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="kode_dosen" id="kode_dosen" placeholder="ID Dosen" value="<?= $dk['id_dosen']; ?>" readonly>
-            <label for="kode_dosen">ID Dosen</label>
-          </div>
-          <br>
-
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="kode_pertemuan" id="kode_pertemuan" placeholder="Pertemuan" value="<?= $dp; ?>" readonly>
-            <label for="kode_pertemuan">Pertemuan</label>
-          </div>
-          <br>
-
-
+          Tambah pertemuan baru ?
 
         </div>
         <div class="modal-footer">

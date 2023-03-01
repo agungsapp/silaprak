@@ -44,7 +44,7 @@
                 <tr>
                   <td>Dosen Pengajar</td>
                   <td>:</td>
-                  <td><?= $kelas['first_name']; ?> <?= $kelas['last_name'] ?></td>
+                  <td style="text-transform: capitalize;"><?= $kelas['first_name']; ?> <?= $kelas['last_name'] ?></td>
                 </tr>
 
                 <tr>
@@ -70,15 +70,19 @@
         <!-- card pertemuan -->
         <div class="card">
 
-          <div class="card-header bg-primary py-3 d-flex justify-content-between align-items-baseline">
-            <h5 class="text-white">Pertemuan</h5>
-            <a href="/mahasiswa/laporanLengkap/<?= $kelas['kode_mk']; ?>/<?= user_id(); ?>" class="btn btn-info fw-bold fs-lg-5">Lihat Laporan Lengkap</a>
+          <div class="card-header bg-primary py-3 d-flex justify-content-between align-items-baseline flex-wrap">
+            <h5 class="text-white fs-sm-6">Pertemuan</h5>
+            <a href="/mahasiswa/laporanLengkap/<?= $kelas['kode_mk']; ?>/<?= user_id(); ?>" class="btn btn-info fw-bold fs-lg-5 align-self-start">Lihat Laporan Lengkap</a>
           </div>
 
 
           <div class="card-body mt-3">
             <!-- Button trigger modal -->
+            <?php if (!$pertemuan) : ?>
+              <h5 class="text-center text-muted p-4">-- Belum Ada Data Pertemuan --</h5>
+            <?php endif ?>
             <?php foreach ($pertemuan as $p) : ?>
+              <?php $nilainya =  $p['nilai']; ?>
               <!-- pertemuan  -->
               <!-- acordion start -->
               <div class="accordion mt-1" id="accordionPanelsStayOpenExample">
@@ -113,9 +117,32 @@
                         <div class="btn btn-danger mb-2 bg-gradient opacity-50"><span class="opacity-100">file materi : <?= $p['file_instruksi']; ?></span></div>
                         <div class="d-flex justify-content-between justify-content-lg-end">
                           <a href="/mahasiswa/download/<?= $p['kode_tugas']; ?>" class="btn btn-info bg-gradient">Download</a>
-                          <a href="/mahasiswa/kerjakanLaporan/<?= $p['kode_mk'] . "/" . $p['kode_pertemuan'] . "/" . $p['kode_tugas'] . "/" . $kelas['id_kelas']; ?>" class="btn btn-primary bg-gradient ms-lg-2">Kerjakan Laporan</a>
+                          <a href="/mahasiswa/kerjakanLaporan/<?= $p['kode_mk'] . "/" . $p['kode_pertemuan'] . "/" . $p['kode_tugas'] . "/" . $kelas['id_kelas']; ?>" class="btn btn-primary bg-gradient ms-lg-2 <?= $p['nilai'] == null ? '' : 'd-none'; ?>">Kerjakan Laporan</a>
                         </div>
+                        <?php if ($p['nilai'] == null) : ?>
+                        <?php else : ?>
+                          <hr>
+                          <div class="row d-flex flex-column flex-lg-row-reverse">
+                            <div class="col-12 col-lg-2">
+                              <div class="d-flex justify-content-lg-end justify-content-sm-start">
+                                <!-- Button trigger modal -->
 
+                              </div>
+                            </div>
+                            <div class="col-12 col-lg-10 mt-3 mt-lg-0">
+                              <div class="d-flex justify-content-between justify-content-lg-start">
+                                <div class="d-flex flex-column align-items-center">
+                                  <p class="fw-bold">huruf mutu</p>
+                                  <div style="width: 100px; height: 100px;" class="huruf-mutu border bg-primary bg-opacity-50 ms-2 fw-bold fs-2 d-flex justify-content-center align-items-center"><?= $p['huruf_mutu']; ?></div>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                  <p class="fw-bold">nilai </p>
+                                  <div style="width: 100px; height: 100px;" class="nilai-angka border bg-success bg-opacity-50 ms-2 fw-bold fs-2 d-flex justify-content-center align-items-center"><?= $p['nilai'] ?></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <?php endif ?>
                       <?php endif ?>
                     </div>
                   </div>
@@ -136,3 +163,9 @@
 </div>
 
 <?= $this->endSection(); ?>
+
+
+
+// =========================================================================================== //
+// ======================== entah gimana pokonya eror bingung juga . ========================= //
+// =========================================================================================== //

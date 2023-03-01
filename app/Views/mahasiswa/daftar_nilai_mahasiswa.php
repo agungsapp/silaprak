@@ -1,4 +1,4 @@
-<?= $this->extend('dosen/template/index'); ?>
+<?= $this->extend('mahasiswa/template/index'); ?>
 <?= $this->section('content'); ?>
 <div class="page-heading">
   <div class="page-title">
@@ -59,6 +59,34 @@
 
   <!-- card mata kuliah end -->
 
+  <!-- card rangkuman nilai -->
+  <div class="card">
+    <div class="card-header border py-2 bg-primary text-white fs-5">
+      Nilai Rata - Rata
+    </div>
+    <div class="card-body p-3">
+
+      <div class="row d-flex flex-column flex-lg-row-reverse">
+        <div class="col-12 col-lg-2">
+          <div class="d-flex justify-content-lg-end justify-content-sm-start">
+          </div>
+        </div>
+        <div class="col-12 col-lg-10 mt-3 mt-lg-0">
+          <div class="d-flex justify-content-between justify-content-lg-start">
+            <div class="d-flex flex-column align-items-center">
+              <p class="fw-bold">huruf mutu</p>
+              <div style="width: 100px; height: 100px;" class="huruf-mutu border bg-primary bg-opacity-50 ms-2 fw-bold fs-2 d-flex justify-content-center align-items-center"><?= $ns['huruf_mutu']; ?></div>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <p class="fw-bold">nilai</p>
+              <div style="width: 100px; height: 100px;" class="nilai-angka border bg-success bg-opacity-50 ms-2 fw-bold fs-2 d-flex justify-content-center align-items-center"><?= substr($ns['nilai_rata_rata'], 0, 2);; ?></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- card rangkuman nilai end -->
 
 
   <!-- Hoverable rows start -->
@@ -67,7 +95,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Daftar Mahasiswa</h4>
+            <h4 class="card-title">Daftar Nilai</h4>
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -76,27 +104,22 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Nama Mahasiswa</th>
-                      <th>Npm</th>
-                      <th>Action</th>
+                      <th>Pertemuan</th>
+                      <th>Nilai</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if (empty($dm)) : ?>
+                    <?php if (empty($dn)) : ?>
                       <tr>
-                        <td class="text-center" colspan="4">- Belum Ada Mahasiswa Yang Mengikuti Kelas Ini -</td>
+                        <td class="text-center" colspan="4">- Belum Ada Penilaian -</td>
                       </tr>
                     <?php else : ?>
                       <?php $i = 1; ?>
-                      <?php foreach ($dm as $d) : ?>
+                      <?php foreach ($dn as $d) : ?>
                         <tr>
                           <td><?= $i++ ?></td>
-                          <td class="text-bold-500"><?= $d['first_name'] . " " . $d['last_name']; ?></td>
-                          <td><?= $d['npm']; ?></td>
-                          <td>
-                            <a href="/dosen/detailNilai/<?= $d['kode_mk']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn btn-success" style="margin-left: 10px;"><i class="fa-regular fa-eye"></i><span class="ms-3">Detail Nilai</span></a>
-                            <!-- baru sampe sini bruh -->
-                          </td>
+                          <td class="text-bold-500"><?= 'Pertemuan' . " " . $d['kode_pertemuan']; ?></td>
+                          <td><?= $d['nilai_angka']; ?></td>
                         </tr>
                       <?php endforeach ?>
                     <?php endif ?>

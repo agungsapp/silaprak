@@ -45,33 +45,33 @@
 
             <!-- data mahasiswa -->
 
-<?php include('headerlaporan.php') ?>
+            <?php include('headerlaporan.php') ?>
             <hr>
 
             <figure class="table" style="width:100%; border:none;">
-    <table cellspacing="0" cellpadding="0" class="ck-table-resized" style="border:none">
-        <colgroup><col style="width:21.29%;"><col style="width:3.31%;"><col style="width:75.4%;"></colgroup>
-        <tbody>
-        <tr>
-                  <td>nama</td>
-                  <td>:</td>
-                  <td><?= $mhs['firstName']; ?> <?= $mhs['lastName'] ?></td>
-                </tr>
+              <table cellspacing="0" cellpadding="0" class="ck-table-resized" style="border:none">
+                  <colgroup><col style="width:21.29%;"><col style="width:3.31%;"><col style="width:75.4%;"></colgroup>
+                  <tbody>
+                  <tr>
+                            <td>nama</td>
+                            <td>:</td>
+                            <td><?= $mhs['firstName']; ?> <?= $mhs['lastName'] ?></td>
+                          </tr>
 
-                <tr>
-                  <td>Npm</td>
-                  <td>:</td>
-                  <td><?= $mhs['npm']; ?></td>
-                </tr>
+                          <tr>
+                            <td>Npm</td>
+                            <td>:</td>
+                            <td><?= $mhs['npm']; ?></td>
+                          </tr>
 
-                <tr>
-                  <td>E-mail</td>
-                  <td>:</td>
-                  <td><?= $mhs['email']; ?></td>
-                </tr>
-        </tbody>
-    </table>
-</figure>
+                          <tr>
+                            <td>E-mail</td>
+                            <td>:</td>
+                            <td><?= $mhs['email']; ?></td>
+                          </tr>
+                  </tbody>
+              </table>
+            </figure>
             <!-- data mahasiswa end -->
 
 

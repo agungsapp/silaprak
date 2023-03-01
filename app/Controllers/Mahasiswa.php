@@ -8,7 +8,8 @@ use \App\Models\KelasMahasiswaModel;
 use \App\Models\DetailPertemuanModel;
 use \App\Models\TugasModel;
 use \App\Models\LaporanModel;
-
+use \App\Models\NilaiModel;
+use PhpParser\Node\Stmt\Echo_;
 
 class Mahasiswa extends BaseController
 {
@@ -18,6 +19,8 @@ class Mahasiswa extends BaseController
   protected $detailPertemuanModel;
   protected $tugasModel;
   protected $laporanModel;
+  protected $nilaiModel;
+
 
   public function __construct()
   {
@@ -27,17 +30,16 @@ class Mahasiswa extends BaseController
     $this->detailPertemuanModel = new DetailPertemuanModel();
     $this->tugasModel = new TugasModel();
     $this->laporanModel = new LaporanModel();
+    $this->nilaiModel = new NilaiModel();
   }
 
   public function index()
   {
-
-    // echo "selamat datang mahasiswa !!!";
     $keyword = $this->request->getVar('cari_matkul');
     if ($keyword) {
-      $hasil = $this->mkModel->pencarian($keyword);
+      $hasil = $this->mkModel->pencarian($keyword, user_id());
     } else {
-      $hasil = $this->mkModel->getKelasAll();
+      $hasil = $this->mkModel->getKelasAll(user_id());
     }
 
     $data = [
@@ -45,7 +47,6 @@ class Mahasiswa extends BaseController
       'menu' => 'dashboard',
       'matkul' => $hasil
     ];
-    // dd($data['matkul']);
     return view('mahasiswa/dashboard', $data);
   }
 
@@ -97,14 +98,14 @@ class Mahasiswa extends BaseController
   }
 
   // pencarian kelas 
-  public function cariKelas()
+  public function cariKelas($kata)
   {
     // fungsi pencarian belum berjalan
     $kata = $this->request->getVar('cari_matkul');
     $data = [
       'title' => 'dashboard',
       'menu' => 'dashboard',
-      'hasil' => $this->mkModel->pencarian($kata)
+      'hasil' => $this->mkModel->pencarian($kata, user_id())
     ];
     return view('mahasiswa/dashboard', $data);
   }
@@ -119,9 +120,8 @@ class Mahasiswa extends BaseController
 
     ]);
     session()->setFlashdata('pesan', "Berhasil daftar pada kelas $matkul !");
-
-
-    return redirect()->to('/mahasiswa');
+    // return redirect()->to('/mahasiswa');
+    return redirect()->to($_SERVER['HTTP_REFERER']);
   }
 
   public function masukKelas($idkel, $kodemk)
@@ -130,10 +130,10 @@ class Mahasiswa extends BaseController
       'title' => 'masuk kelas',
       'menu' => 'daftarkelas',
       'kelas' => $this->klsMhsModel->getKelasMhs($idkel),
-      'pertemuan' => $this->detailPertemuanModel->getDataPertemuanKelas($kodemk)
+      'pertemuan' => $this->detailPertemuanModel->getDataPertemuanKelas($kodemk, user_id())
     ];
 
-    // dd($data['pertemuan']);
+    // d($data['pertemuan']);
 
     return view('mahasiswa/masuk_kelas', $data);
   }
@@ -245,5 +245,31 @@ class Mahasiswa extends BaseController
     ];
 
     return view('mahasiswa/laporan_lengkap', $data);
+  }
+
+  public function dataNilai()
+  {
+
+    $data = [
+      'title' => 'Daftar Kelas Anda',
+      'menu' => 'daftarnilai',
+      'matkul' => $this->mkModel->getDataNilaiMhs(user_id())
+    ];
+
+    return view('mahasiswa/data_nilai', $data);
+  }
+
+  public function lihatDetailNilai($kodemk)
+  {
+    $data = [
+      'title' => 'Detail Nilai',
+      'menu' => 'daftarnilai',
+      'dk' => $this->mkModel->getKelas($kodemk),
+      'dn' => $this->nilaiModel->getDataNilaiMhs($kodemk, user_id()), //dn data nilai
+      'ns' => $this->nilaiModel->getNilaiSeluruh($kodemk, user_id())
+
+    ];
+
+    return view('mahasiswa/daftar_nilai_mahasiswa', $data);
   }
 }

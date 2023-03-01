@@ -79,17 +79,23 @@
               </tr>
             </thead>
             <tbody>
-              <?php $i = 1; ?>
-              <?php foreach ($dm as $d) : ?>
-                <tr class="align-baseline">
-                  <th scope="row"><?= $i++; ?></th>
-                  <td><?= $d['first_name'] . " " . $d['last_name']; ?></td>
-                  <td><?= $d['npm']; ?></td>
-                  <td>
-                    <a href="/dosen/lihatLaporanMahasiswa/<?= $d['kode_mk']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn btn-success">Detail Laporan</a>
-                  </td>
+              <?php if (empty($dm)) : ?>
+                <tr>
+                  <td colspan="4" class="text-center">- Belum ada mahasiswa -</td>
                 </tr>
-              <?php endforeach ?>
+              <?php else : ?>
+                <?php $i = 1; ?>
+                <?php foreach ($dm as $d) : ?>
+                  <tr class="align-baseline">
+                    <th scope="row"><?= $i++; ?></th>
+                    <td><?= $d['first_name'] . " " . $d['last_name']; ?></td>
+                    <td><?= $d['npm']; ?></td>
+                    <td>
+                      <a href="/dosen/lihatLaporanMahasiswa/<?= $d['kode_mk']; ?>/<?= $d['id_mahasiswa']; ?>" class="btn btn-success">Detail Laporan</a>
+                    </td>
+                  </tr>
+                <?php endforeach ?>
+              <?php endif ?>
             </tbody>
           </table>
         </div>

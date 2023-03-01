@@ -52,7 +52,7 @@ use CodeIgniter\Database\BaseUtils;
     <?= $this->include('dosen/template/sidebar'); ?>
 
 
-    <div id="main" class="container p-2">
+    <div id="main" class="container p-4">
       <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
           <i class="bi bi-justify fs-3"></i>
@@ -105,7 +105,8 @@ use CodeIgniter\Database\BaseUtils;
         url: "<?= site_url('/dosen/kode'); ?>",
         type: "GET",
         success: function(hasil) {
-          var obj = $.parseJSON(hasil);
+          var obj = JSON.parse(hasil);
+          console.log(obj)
           $('#kodemk').val(obj);
         }
 
