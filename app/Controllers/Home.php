@@ -20,7 +20,7 @@ class Home extends BaseController
     {
         if (in_groups('super-admin')) {
             echo "login as super-admin";
-            return redirect()->to('/super');
+            return redirect()->to('/admin');
         } else if (in_groups('dosen')) {
             echo "<script> alert('update data dosen') </script>";
             // foreach ($userdata as $u)

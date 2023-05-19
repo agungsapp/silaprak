@@ -32,4 +32,12 @@ class DosenModel extends Model
     $builder->where('id_dosen', $id);
     return $query = $builder->countAllResults();
   }
+
+  public function countAllDosen()
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM dosen");
+    $data = $query->getNumRows();
+    return $data;
+  }
 }

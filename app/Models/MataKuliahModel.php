@@ -121,7 +121,8 @@ LEFT JOIN dosen AS dosen ON mk.id_dosen = dosen.id_dosen;");
     $db = \Config\Database::connect();
     $builder = $db->table('mata_kuliah');
     $builder->where('id_dosen', $id);
-    $query = $builder->get()->getNumRows();
+    $builder->get();
+    $query = $builder->countAllResults();
     return $query;
   }
 
@@ -181,5 +182,23 @@ LEFT JOIN dosen AS dosen ON mk.id_dosen = dosen.id_dosen;");
     $builder = $db->table('mata_kuliah');
     $builder->where('kode_mk', $kodemk);
     $builder->delete();
+  }
+
+  public function countAllMatakuliah()
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM mata_kuliah");
+    $data = $query->getNumRows();
+    return $data;
+  }
+
+  // admin area
+  public function getAllKelas()
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM mata_kuliah m
+    JOIN dosen d ON m.id_dosen=d.id_dosen;");
+    $data = $query->getResult();
+    return $data;
   }
 }

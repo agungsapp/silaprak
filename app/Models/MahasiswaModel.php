@@ -31,4 +31,11 @@ class MahasiswaModel extends Model
     $builder->where('id_mahasiswa', $id);
     return $query = $builder->countAllResults();
   }
+  public function countAllMahasiswa()
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM mahasiswa");
+    $data = $query->getNumRows();
+    return $data;
+  }
 }

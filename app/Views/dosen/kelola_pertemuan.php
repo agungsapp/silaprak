@@ -1,7 +1,7 @@
 <?= $this->extend('dosen/template/index'); ?>
 <?= $this->section('content'); ?>
 
-
+<?php d($pertemuan) ?>
 
 <div class="page-heading">
   <div class="page-title">
@@ -83,10 +83,12 @@
                 <!-- judul_prak, deskripsi, tanggal, jam, file_prak, || btn tambahPraktikum -->
                 <!-- id pertemuan hidden -->
                 <input type="hidden" name="idpertemuan" value="<?= $dl['id_pertemuan'] ?>">
+                <input type="hidden" name="kode_pertemuan" value="<?= $dl['id_pertemuan'] ?>">
                 <!-- kode kelas hidden -->
-                <input type="hidden" name="kode_mk" value="<?= $dl['id_tugas'] ?>">
+                <input type="hidden" name="kode_mk" value="<?= $dl['kode_mk'] ?>">
                 <!-- kode tugas generate hidden -->
                 <input type="hidden" name="idtugas" id="idtugas" value="<?= $idtugas; ?>">
+
 
                 <!-- judul_prak -->
                 <div class="col-md-12">
@@ -108,20 +110,23 @@
                 </div>
 
 
-                <?php if ($dl['deadline'] == 100) : ?>
+                <?php if ($dl['deadline'] === '0000-00-00 00:00:00') : ?>
                 <?php else : ?>
-                  <div class="col-md-6" style="display: none;" id="deadline">
+                  <?php
+                  list($tanggal, $waktu) = explode(' ', $dl['deadline']);
+                  ?>
+                  <div class="col-md-6" id="deadline">
                     <label for="datepicker" class="col-sm-6 col-form-label">Batas Waktu Pengumpulan</label>
                     <div class="input-group mb-5">
                       <!-- tanggal -->
-                      <input type="text" class="form-control date" name="tanggal" id="datepicker" value="0">
+                      <input type="text" class="form-control date" name="tanggal" id="datepicker" value="<?= $tanggal; ?>">
                       <div class="invalid-feedback">
                         Please choose a username.
                       </div>
                       <!-- <span class="input-group-text">@</span> -->
                       <i class="fa-solid fa-calendar-days bg-white d-block input-group-text"></i>
                       <!-- jam -->
-                      <input type="text" name="jam" id="jam" class="form-control text-center" value="0">
+                      <input type="text" name="jam" id="jam" class="form-control text-center" value="<?= $waktu; ?>">
                       <div class="invalid-feedback">
                         Please choose a username.
                       </div>
@@ -156,7 +161,7 @@
                 <!-- kode kelas hidden -->
                 <input type="hidden" name="kode_mk" value="<?= $pertemuan['kode_mk'] ?>">
                 <!-- kode pertemuan -->
-                <input type="hidden" name="kode_pertemuan" value="<?= $pertemuan['kode_pertemuan'] ?>">
+                <input type="text" name="kode_pertemuan" value="<?= $pertemuan['kode_pertemuan'] ?>">
                 <!-- kode tugas generate hidden -->
                 <input type="hidden" name="idtugas" id="idtugas" value="<?= $idtugas; ?>">
 

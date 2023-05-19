@@ -2,27 +2,22 @@
 
 namespace App\Controllers;
 // untuk memanggil model
-use \App\Models\MataKuliahModel;
-use \App\Models\ProfileModel;
-use \App\Models\DetailPertemuanModel;
-use \App\Models\TugasModel;
-use \App\Models\KelasMahasiswaModel;
-use \App\Models\LaporanModel;
-use \App\Models\UsersModel;
-use \App\Models\NilaiModel;
+use \App\models\MataKuliahModel;
+use \App\models\ProfileModel;
+use \App\models\DetailPertemuanModel;
+use \App\models\TugasModel;
+use \App\models\KelasMahasiswaModel;
+use \App\models\LaporanModel;
+use \App\models\UsersModel;
+use \App\models\NilaiModel;
+use \App\models\JamModel;
+
 
 use function PHPUnit\Framework\isNull;
 
 class Dosen extends BaseController
 {
-    protected $mkModel;
-    protected $profileModel;
-    protected $detailPertemuanModel;
-    protected $tugasModel;
-    protected $kelasMhs;
-    protected $laporanModel;
-    protected $userModel;
-    protected $nilaiModel;
+    protected $mkModel, $profileModel, $detailPertemuanModel, $tugasModel, $kelasMhs, $laporanModel, $userModel, $nilaiModel, $jamModel;
 
     public function __construct()
     {
@@ -34,6 +29,7 @@ class Dosen extends BaseController
         $this->laporanModel = new LaporanModel();
         $this->userModel = new UsersModel();
         $this->nilaiModel = new NilaiModel();
+        $this->jamModel = new JamModel();
     }
 
     public function index()
@@ -91,6 +87,7 @@ class Dosen extends BaseController
     {
         $data['menu'] = 'daftarkelas';
         $data['title'] = 'daftar kelas';
+        $data['time'] = $this->jamModel->findAll();
         // $data['matkul'] = $this->mkModel->where('id_dosen', user_id())->findAll();
         // $data['matkul'] = $this->mkModel->where('id_dosen', user_id())->findAll();
         $data['matkul'] = $this->kelasMhs->getKelasAndCheck(user_id());
@@ -260,11 +257,11 @@ class Dosen extends BaseController
 
         // kodemk koper imas npm nilap saran
         // standar penilaian ibi darmajaya berdasarkan web http://apt.darmajaya.ac.id/file_dokumen/Peraturan%20Akademik.pdf
-        // >80
-        // 66-80
-        // 51-65
-        // 40-50
-        // <40
+        // >80 A
+        // 66-80 B 
+        // 51-65 C
+        // 40-50 D
+        // <40 E
 
         $huruf = '0';
         $nilai = $this->request->getVar('nilap');
@@ -361,6 +358,7 @@ class Dosen extends BaseController
         $kodepertemuan = $this->request->getVar('kode_pertemuan');
         $idtugas = $this->request->getVar('idtugas');
         $kodemk = $this->request->getVar('kode_mk');
+
         // $validation = \Config\Services::validation();
         if (!$this->validate([
             'judul_prak' => [
@@ -385,7 +383,7 @@ class Dosen extends BaseController
         ])) {
             // $validation = \Config\Services::validation();
 
-            return redirect()->to("dosen/detailPertemuan/$idpertemuan")->withInput();
+            return redirect()->to("dosen/detailPertemuan/$idpertemuan/$kodemk/$kodepertemuan")->withInput();
 
             // cara return view
             // $data['validasi'] = $validation;

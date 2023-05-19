@@ -244,6 +244,7 @@ use function PHPUnit\Framework\isNull;
           <select class="form-select" name="jam" aria-label="Default select example">
             <option selected>Pilih Jam</option>
             <!-- 2 sks -->
+
             <option value="07.10-08.40">07.10-08.40</option>
             <option value="08.50-10.20">08.50-10.20</option>
             <option value="10.30-12.00">10.30-12.00</option>
@@ -255,10 +256,7 @@ use function PHPUnit\Framework\isNull;
             <option value="10.30-14.30">10.30-14.30</option>
             <option value="13.00-16.10">13.00-16.10</option>
           </select>
-          <br>
           <!-- select end -->
-
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

@@ -58,4 +58,36 @@ class NilaiModel extends Model
     $data = $query->getRowArray();
     return $data;
   }
+
+  // admin area 
+  public function getAllNilaiByMK($kodemk)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT 
+    mahasiswa.id_mahasiswa,
+    mahasiswa.npm,
+    mahasiswa.first_name,
+    mahasiswa.last_name,
+    nilai.kode_mk,
+    AVG(nilai_angka) AS nilai_rata_rata
+FROM 
+    nilai 
+    INNER JOIN mahasiswa ON nilai.id_mahasiswa = mahasiswa.id_mahasiswa
+WHERE 
+    nilai.kode_mk LIKE '$kodemk%' 
+GROUP BY 
+    nilai.id_mahasiswa;");
+    $data = $query->getResult();
+    return $data;
+  }
+
+  public function getDetailNilaiByMkAndID($kodemk, $imas)
+  {
+    $db = \Config\Database::connect();
+    $query = $db->query("SELECT * FROM nilai WHERE kode_mk = '$kodemk' AND id_mahasiswa = $imas");
+    $data = $query->getResult();
+    return $data;
+  }
+
+  // public function getNilaiSpesific()
 }

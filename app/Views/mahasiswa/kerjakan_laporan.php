@@ -68,7 +68,13 @@
         </div>
 
         <!-- card mata kuliah end -->
+        <!-- alert -->
+        <div id="deadline" class="d-none"><?= $kelas['deadline']; ?></div>
+        <div class="alert alert-light fw-bold" style="border: 2px solid RGBA( 165, 42, 42, .5 );" role="alert">
+          PERINGATAN !!!, waktu tersisa untuk mengerjakan laporan ini adalah <div class="d-inline fw-bold text-danger" id="peringatandeadline"></div>
+        </div>
 
+        <!-- alert end -->
 
         <!-- card pengerjaan laporan -->
         <form <?php if ($ava > 0) : ?> action="/mahasiswa/updateLaporan" <?php else : ?> action="/mahasiswa/simpan" <?php endif; ?> method="post">
@@ -96,7 +102,7 @@
                                                       }
                                                       ?>
               </textarea>
-              <button type="submit" name="kumpulkan" class="btn btn-primary fs-5 mt-5">Kumpulkan Laporan</button>
+              <button id="kumpul" type="submit" name="kumpulkan" class="btn btn-primary fs-5 mt-5">Kumpulkan Laporan</button>
             </div>
           </div>
         </form>
@@ -109,6 +115,35 @@
 <!-- Hoverable rows end -->
 
 </div>
+
+<script>
+  // button kumpul tugas
+  var kumpul_elem = document.getElementById("kumpul");
+  // ambil elemen dengan id "deadline" dan "peringatandeadline"
+  var deadline_elem = document.getElementById("deadline");
+  var peringatan_elem = document.getElementById("peringatandeadline");
+  // ambil tanggal dan waktu deadline
+  var deadline = new Date(deadline_elem.textContent);
+  // panggil fungsi countdown setiap 1 detik
+  var countdown = setInterval(function() {
+    // hitung selisih waktu antara sekarang dan deadline
+    var now = new Date().getTime();
+    var selisih_waktu = deadline - now;
+    // hitung jumlah hari, jam, menit, dan detik
+    var hari = Math.floor(selisih_waktu / (1000 * 60 * 60 * 24));
+    var jam = Math.floor((selisih_waktu % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var menit = Math.floor((selisih_waktu % (1000 * 60 * 60)) / (1000 * 60));
+    var detik = Math.floor((selisih_waktu % (1000 * 60)) / 1000);
+    // tampilkan selisih waktu
+    peringatan_elem.innerHTML = hari + " hari " + jam + " jam " + menit + " menit " + detik + " detik ";
+    // jika deadline sudah lewat, hentikan countdown
+    if (selisih_waktu < 0) {
+      clearInterval(countdown);
+      peringatan_elem.innerHTML = "Waktu habis";
+      kumpul_elem.disabled = true;
+    }
+  }, 1000);
+</script>
 
 
 
